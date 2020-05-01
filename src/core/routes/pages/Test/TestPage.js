@@ -11,7 +11,7 @@ const Test = (props) => {
 }
 
 const mapStateToProps = (state) => {
-    let {count} = state;
+    let {count} = state.testReducer;
 
     return {count};
 }

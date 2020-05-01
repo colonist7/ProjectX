@@ -1,12 +1,12 @@
 import React from 'react';
 import MainRouter from './core/routes/router';
 import {Provider} from 'react-redux';
-import {testStore} from './core/redux/reducers/TestReducer/TestReducer';
+import Store from './core/redux/store';
 
 
 function App() {
   return (
-      <Provider store={testStore}>
+      <Provider store={Store}>
         <MainRouter />
       </Provider>
   );
