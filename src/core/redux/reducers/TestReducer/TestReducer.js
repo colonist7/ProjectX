@@ -1,10 +1,10 @@
 export const INCREMENT = 'INCREMENT';
 export const DECREMENT = 'DECREMENT';
 
-export const  initialState = {
-                  count: 0,
-                  amount: 1,
-              }
+const  initialState = {
+            count: 0,
+            amount: 1,
+        }
 
 export const testReducer = (state = initialState, action) => {
     switch (action.type) {
