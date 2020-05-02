@@ -1,8 +1,13 @@
-import {testReducer} from './reducers/TestReducer/TestReducer';
-import { combineReducers } from 'redux';
+import {testReducer} from './reducers/Test/TestReducer';
+import {authReducer} from './reducers/Auth/AuthReducer';
+import {registerReducer} from './reducers/Register/RegisterReducer';
+import {combineReducers } from 'redux';
+
 
 const reducer =  combineReducers({
-    testReducer
+    testReducer,
+    authReducer,
+    registerReducer
 })                    
 
 export default reducer;

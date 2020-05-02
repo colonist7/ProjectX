@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import TestShell from './TestPage.shell';
-import {incrementAction, decrementAction} from '../../../redux/reducers/TestReducer/TestActions';
+import {incrementAction, decrementAction} from '../../../redux/reducers/Test/TestActions';
 import ModelFactory from '../../../http/resources';
 
 

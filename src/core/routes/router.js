@@ -5,8 +5,10 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import Login from './pages/Login/Login';
+import Auth from './pages/Auth/Auth';
 import Test from "./pages/Test/TestPage";
+import Register from "./pages/Register/Register";
+import Home from "./pages/Home/Home";
 
 export default function MainRouter() {
   return (
@@ -15,7 +17,7 @@ export default function MainRouter() {
         <nav>
           <ul>
             <li>
-              <Link to="/">Home</Link>
+                <Link to="/">Home</Link>
             </li>
             <li>
               <Link to="/login">Login</Link>
@@ -26,22 +28,21 @@ export default function MainRouter() {
           </ul>
         </nav>
         <Switch>
-          <Route path="/test">
-            <Test />
-          </Route>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
+            <Route path="/test">
+                <Test />
+            </Route>
+            <Route path="/login">
+                <Auth />
+            </Route>
+            <Route path="/register">
+                <Register />
+            </Route>
+            <Route path="/">
+              <Home />
+            </Route>
         </Switch>
       </div>
     </Router>
   );
-}
-
-function Home() {
-  return <h2>Home</h2>;
 }
 
