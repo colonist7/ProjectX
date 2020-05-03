@@ -3,7 +3,6 @@ import { Provider } from "react-redux";
 import Store from "../redux/store";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Auth from "./Auth/Auth";
-import Test from "./Test/TestPage";
 import Register from "./Register/Register";
 import Home from "./Home/Home";
 import User from "./User/User";
@@ -28,15 +27,9 @@ function MainRouter() {
             <li>
               <Link to="/login">Login</Link>
             </li>
-            <li>
-              <Link to="/test">Test</Link>
-            </li>
           </ul>
         </nav>
         <Switch>
-          <Route path="/test">
-            <Test />
-          </Route>
           <Route path="/login">
             <Auth />
           </Route>
