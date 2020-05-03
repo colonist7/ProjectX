@@ -1,4 +1,4 @@
-import ModelFactory from "../../../http/resources";
+import { register } from "../../../api/auth.api";
 
 export const SUBMIT_REGISTRATION = "SUBMIT_REGISTRATION";
 export const REGISTER_HANDLE_CHANGE = "REGISTER_HANDLE_CHANGE";
@@ -12,7 +12,7 @@ const initialState = {
 };
 
 function submitRegistration(userName, userMail, userPassword, confirmPassword) {
-  ModelFactory().Auth().register(userName, userMail, userPassword, confirmPassword);
+  register(userName, userMail, userPassword, confirmPassword);
 }
 
 function checkPassword(password, confirmPassword) {

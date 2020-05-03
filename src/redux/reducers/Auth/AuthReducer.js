@@ -1,4 +1,4 @@
-import ModelFactory from "../../../http/resources";
+import { auth } from "../../../api/auth.api";
 import { setAuthenticated } from "./AuthActions";
 import Store from "../../store";
 
@@ -13,17 +13,14 @@ const initialState = {
 };
 
 const checkCredentials = (username, password) => {
-  ModelFactory()
-    .Auth()
-    .login(username, password)
-    .then((res) => {
-      if (res.statusText === "OK" && res.data.success) {
-        alert("good");
-        Store.dispatch(setAuthenticated());
-        window.location.pathname = "/user";
-      }
-      console.log(res);
-    });
+  auth(username, password).then((res) => {
+    if (res.statusText === "OK" && res.data.success) {
+      alert("good");
+      Store.dispatch(setAuthenticated());
+      window.location.pathname = "/user";
+    }
+    console.log(res);
+  });
 };
 
 export const authReducer = (state = initialState, action) => {
