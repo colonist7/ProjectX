@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import RegisterShell from "./Register.shell";
 import { handleChange, submitRegistration } from "../../redux/reducers/Register/RegisterActions";

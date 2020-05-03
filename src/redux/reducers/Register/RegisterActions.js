@@ -1,4 +1,4 @@
-import { SUBMIT_REGISTRATION, HANDLE_CHANGE, CHECK_PASSWORD } from "./RegisterReducer";
+import { SUBMIT_REGISTRATION, REGISTER_HANDLE_CHANGE } from "./RegisterReducer";
 
 export const submitRegistration = (userName, userMail, userPassword, confirmPassword) => {
   return {
@@ -12,7 +12,7 @@ export const submitRegistration = (userName, userMail, userPassword, confirmPass
 
 export const handleChange = (property, value) => {
   return {
-    type: HANDLE_CHANGE,
+    type: REGISTER_HANDLE_CHANGE,
     property: property,
     value: value,
   };

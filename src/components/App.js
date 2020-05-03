@@ -6,6 +6,7 @@ import Auth from "./Auth/Auth";
 import Test from "./Test/TestPage";
 import Register from "./Register/Register";
 import Home from "./Home/Home";
+import User from "./User/User";
 
 function App() {
   return (
@@ -41,6 +42,9 @@ function MainRouter() {
           </Route>
           <Route path="/register">
             <Register />
+          </Route>
+          <Route path="/user">
+            <User />
           </Route>
           <Route path="/">
             <Home />
