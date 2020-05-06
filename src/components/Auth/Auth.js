@@ -1,34 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
 import AuthShell from "./Auth.shell";
-import { checkCredentials, handleChange } from "../../redux/reducers/Auth/AuthActions";
+import { auth } from "../../redux/reducers/Auth/AuthReducer";
 
 const Auth = (props) => {
-  const { checkCredentials, userName, userPassword, handleChange } = props;
-  return (
-    <AuthShell
-      checkCredentials={checkCredentials}
-      userName={userName}
-      userPassword={userPassword}
-      handleChange={handleChange}
-    />
-  );
-};
-
-const mapStateToProps = (state) => {
-  let { userName, userPassword } = state.authReducer;
-  return { userName, userPassword };
+  const { authUser } = props;
+  return <AuthShell authUser={authUser} />;
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    checkCredentials: (userName, userPassword) => {
-      dispatch(checkCredentials(userName, userPassword));
-    },
-    handleChange: (property, value) => {
-      dispatch(handleChange(property, value));
+    authUser: (userName, userPassword) => {
+      dispatch(auth(userName, userPassword));
     },
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Auth);
+export default connect(null, mapDispatchToProps)(Auth);
