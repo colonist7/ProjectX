@@ -1,23 +1,14 @@
-import { register } from "../../../api/auth.api";
+import { register as regApi } from "../../../api/auth.api";
 
-export const SUBMIT_REGISTRATION = "SUBMIT_REGISTRATION";
-export const REGISTER_HANDLE_CHANGE = "REGISTER_HANDLE_CHANGE";
+const REGISTER_USER = "REGISTER_USER";
+const REGISTER_USER_SUCCESS = "REGISTER_USER_SUCCESS";
+const REGISTER_USER_ERROR = "REGISTER_USER_ERROR";
 
 const initialState = {
-  userName: "",
-  userPassword: "",
-  confirmPassword: "",
-  userMail: "",
+  setRegisterError: false,
+  setRegisterLoading: false,
   arePasswordsEqual: false,
 };
-
-function submitRegistration(userName, userMail, userPassword, confirmPassword) {
-  register(userName, userMail, userPassword, confirmPassword);
-}
-
-function checkPassword(password, confirmPassword) {
-  return password === confirmPassword;
-}
 
 function validateEmail(email) {
   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -44,43 +35,40 @@ function validation(state) {
 
 export const registerReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SUBMIT_REGISTRATION:
-      if (
-        validation({
-          userName: action.userName,
-          userMail: action.userMail,
-          arePasswordsEqual: state.arePasswordsEqual,
-        })
-      ) {
-        submitRegistration(action.userName, action.userMail, action.userPassword, action.confirmPassword);
-      } else {
-        alert("not valid data");
-      }
-      return state;
-    case REGISTER_HANDLE_CHANGE:
-      switch (action.property) {
-        case "userName":
-          return Object.assign({}, state, {
-            userName: action.value,
-          });
-        case "userPassword":
-          return Object.assign({}, state, {
-            userPassword: action.value,
-            arePasswordsEqual: checkPassword(action.value, state.confirmPassword),
-          });
-        case "confirmPassword":
-          return Object.assign({}, state, {
-            confirmPassword: action.value,
-            arePasswordsEqual: checkPassword(state.userPassword, action.value),
-          });
-        case "userMail":
-          return Object.assign({}, state, {
-            userMail: action.value,
-          });
-        default:
-          return Object.assign({}, state, state);
-      }
+    case REGISTER_USER:
+      return { ...state, setRegisterError: false, setRegisterLoading: true };
+    case REGISTER_USER_ERROR:
+      return { ...state, setRegisterError: true, setRegisterLoading: false };
+    case REGISTER_USER_SUCCESS:
+      return { ...state, setRegisterError: false, setRegisterLoading: false };
     default:
       return state;
+  }
+};
+
+export const register = (userName, userMail, userPassword, confirmPassword) => (dispatch) => {
+  if (
+    validation({
+      userName: userName,
+      userMail: userMail,
+      arePasswordsEqual: userPassword === confirmPassword,
+    })
+  ) {
+    dispatch({ type: REGISTER_USER });
+
+    regApi(userName, userMail, userPassword, confirmPassword).then(
+      (res) => {
+        if (res.data.success) {
+          dispatch({ type: REGISTER_USER_SUCCESS, payload: res });
+        } else {
+          dispatch({ type: REGISTER_USER_ERROR });
+        }
+      },
+      () => {
+        dispatch({ type: REGISTER_USER_ERROR });
+      }
+    );
+  } else {
+    alert("data isn;t valid");
   }
 };

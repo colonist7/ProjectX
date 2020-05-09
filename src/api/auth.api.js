@@ -8,7 +8,7 @@ export const auth = (userName, password) => {
 };
 
 export const register = (userMail, userName, password, confirmPassword) => {
-  return instance.post("api/Auth/Login", {
+  return instance.post("api/Auth/Register", {
     userMail,
     userName,
     password,

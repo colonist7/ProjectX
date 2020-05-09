@@ -12,6 +12,7 @@ class AuthShell extends Component {
   render() {
     let { name, password } = this.state;
     let { authUser } = this.props;
+
     return (
       <Container>
         <Row>
