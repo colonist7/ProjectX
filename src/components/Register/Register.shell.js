@@ -1,11 +1,17 @@
 import React, { Component } from "react";
 import { Form, Button, Container, Row, FormLabel } from "react-bootstrap";
 
+const InitialState = { userName: "", userPassword: "", confirmPassword: "", userMail: "", arePasswordsEqual: false };
 class RegisterShell extends Component {
   state = { userName: "", userPassword: "", confirmPassword: "", userMail: "", arePasswordsEqual: false };
 
   checkPassword = (a, b) => {
     this.setState({ arePasswordsEqual: a === b });
+  };
+
+  reset = () => {
+    this.props.setResetFalse();
+    this.setState(InitialState);
   };
 
   handleChange = (e) => {
@@ -19,7 +25,11 @@ class RegisterShell extends Component {
 
   render() {
     const { userName, userMail, userPassword, confirmPassword, arePasswordsEqual } = this.state;
-    const { register, setRegisterError, setRegisterLoading } = this.props;
+    const { register, setRegisterError, setRegisterLoading, resetForm } = this.props;
+
+    if (resetForm === true) {
+      this.reset();
+    }
 
     return (
       <Container>

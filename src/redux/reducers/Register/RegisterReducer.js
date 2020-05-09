@@ -3,11 +3,13 @@ import { register as regApi } from "../../../api/auth.api";
 const REGISTER_USER = "REGISTER_USER";
 const REGISTER_USER_SUCCESS = "REGISTER_USER_SUCCESS";
 const REGISTER_USER_ERROR = "REGISTER_USER_ERROR";
+const REGISTER_SET_RESET_FALSE = "REGISTER_SET_RESET_FALSE";
 
 const initialState = {
   setRegisterError: false,
   setRegisterLoading: false,
   arePasswordsEqual: false,
+  resetForm: false,
 };
 
 function validateEmail(email) {
@@ -40,7 +42,9 @@ export const registerReducer = (state = initialState, action) => {
     case REGISTER_USER_ERROR:
       return { ...state, setRegisterError: true, setRegisterLoading: false };
     case REGISTER_USER_SUCCESS:
-      return { ...state, setRegisterError: false, setRegisterLoading: false };
+      return { ...state, setRegisterError: false, setRegisterLoading: false, resetForm: true };
+    case REGISTER_SET_RESET_FALSE:
+      return { ...state, resetForm: false };
     default:
       return state;
   }
@@ -71,4 +75,8 @@ export const register = (userName, userMail, userPassword, confirmPassword) => (
   } else {
     alert("data isn;t valid");
   }
+};
+
+export const RegisterSetResetFalse = () => (dispatch) => {
+  dispatch({ type: REGISTER_SET_RESET_FALSE });
 };

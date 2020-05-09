@@ -1,17 +1,25 @@
 import React from "react";
 import { connect } from "react-redux";
 import RegisterShell from "./Register.shell";
-import { register } from "../../redux/reducers/Register/RegisterReducer";
+import { register, RegisterSetResetFalse } from "../../redux/reducers/Register/RegisterReducer";
 
 const Register = (props) => {
-  const { reg, setRegisterError, setRegisterLoading } = props;
-  return <RegisterShell register={reg} setRegisterError={setRegisterError} setRegisterLoading={setRegisterLoading} />;
+  const { reg, setRegisterError, setRegisterLoading, resetForm, setResetFalse } = props;
+  return (
+    <RegisterShell
+      resetForm={resetForm}
+      register={reg}
+      setRegisterError={setRegisterError}
+      setRegisterLoading={setRegisterLoading}
+      setResetFalse={setResetFalse}
+    />
+  );
 };
 
 const mapStateToProps = (state) => {
-  let { setRegisterLoading, setRegisterError } = state.registerReducer;
+  let { setRegisterLoading, setRegisterError, resetForm } = state.registerReducer;
 
-  return { setRegisterLoading, setRegisterError };
+  return { setRegisterLoading, setRegisterError, resetForm };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -19,6 +27,7 @@ const mapDispatchToProps = (dispatch) => {
     reg: (userName, userMail, userPassword, confirmPassword) => {
       dispatch(register(userName, userMail, userPassword, confirmPassword));
     },
+    setResetFalse: () => dispatch(RegisterSetResetFalse()),
   };
 };
 

@@ -7,11 +7,11 @@ export const auth = (userName, password) => {
   });
 };
 
-export const register = (userMail, userName, password, confirmPassword) => {
+export const register = (email, userName, password, repeatPassword) => {
   return instance.post("api/Auth/Register", {
-    userMail,
+    email,
     userName,
     password,
-    confirmPassword,
+    repeatPassword,
   });
 };
