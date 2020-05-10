@@ -1,8 +1,13 @@
 import React, { Component } from "react";
-import { Form, Button, Col, Container, Row, FormLabel } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
+import UserInfo from "../UserInfo/UserInfo";
+import PeopleYouMayKnow from "../PeopleYouMayKnow/People";
+import Followers from "../Followers/Followers";
+import Following from "../Following/Following";
 
 class UserShell extends Component {
   componentDidMount() {
+    console.log(this.props);
     this.props.getUser(this.props.id);
   }
 
@@ -14,10 +19,11 @@ class UserShell extends Component {
         <Row>
           <Col lg={4}>
             <div>
-              name : {userName} <p>email : {email}</p>
+              <UserInfo name={userName} email={email} />
             </div>
-            <div>People you may know</div>
-            <div>Followers</div>
+            <PeopleYouMayKnow />
+            <Followers />
+            <Following />
           </Col>
           <Col lg="8">Your Posts</Col>
         </Row>

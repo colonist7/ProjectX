@@ -32,12 +32,14 @@ export const auth = (userName, password) => (dispatch) => {
   dispatch({ type: SET_USER });
   authApi(userName, password).then(
     (res) => {
-      dispatch({ type: SET_USER_SUCCESS, payload: res });
       if (res.data.success) {
-        localStorage.setItem("_token", res.data.data.accessToken);
-        localStorage.setItem("_id", res.data.data.id);
+        dispatch({ type: SET_USER_SUCCESS, payload: res });
+        sessionStorage.setItem("_token", res.data.data.accessToken);
+        sessionStorage.setItem("_id", res.data.data.id);
         window.location.pathname = "/user";
         //change redirect
+      } else {
+        dispatch({ type: SET_USER_ERROR });
       }
     },
     () => {

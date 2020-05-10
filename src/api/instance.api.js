@@ -1,4 +1,5 @@
 import * as axios from "axios";
+import store from "../redux/store";
 
 const instance = axios.create({
   // withCredentials: true,
@@ -8,8 +9,14 @@ const instance = axios.create({
     port: 8080,
   },
   headers: {
-    "Access-Control-Allow-Headers": "*",
+    Authorization:
+      sessionStorage.getItem("_token") && sessionStorage.getItem("_token").length !== 0
+        ? `Bearer ${sessionStorage.getItem("_token")}`
+        : "",
   },
 });
 
 export default instance;
+
+// store &&
+//       store.getState().authReducer.isAuthenticated

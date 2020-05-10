@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Auth from "./Auth/Auth";
 import Register from "./Register/Register";
 import Home from "./Home/Home";
-import User from "./User/User";
+import User from "./User/UserMain/User";
 
 function App() {
   return (

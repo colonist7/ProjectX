@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import UserShell from "./User.shell";
 import { connect } from "react-redux";
-import { getUserInfo } from "../../redux/reducers/User/UserReducer";
+import { getUserInfo, getAllFollowers, getFollowingUsers } from "../../../redux/reducers/User/UserReducer";
 
 const User = (props) => {
   const { id, userName, email, getUser } = props;
