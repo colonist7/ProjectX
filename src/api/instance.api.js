@@ -12,6 +12,7 @@ const instance = axios.create({
       sessionStorage.getItem("_token") && sessionStorage.getItem("_token").length !== 0
         ? `Bearer ${sessionStorage.getItem("_token")}`
         : "",
+    // "Access-Control-Allow-Origin": "*",
   },
 });
 

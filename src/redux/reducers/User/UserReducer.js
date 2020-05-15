@@ -65,9 +65,9 @@ export const getUsers = () => (dispatch) => {
 export const followUser = (userId, userName) => (dispatch) => {
   follow(userId, userName).then((res) => {
     if (res.data.success) {
-      getFollowers().then((res) => {
+      getFollowing().then((res) => {
         if (res.data.success) {
-          dispatch({ type: SET_USER_FOLLOWERS, payload: res.data });
+          dispatch({ type: SET_USER_FOLLOWING, payload: res.data });
         }
       });
     }
