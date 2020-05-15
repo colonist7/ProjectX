@@ -8,11 +8,7 @@ const instance = axios.create({
     port: 8080,
   },
   headers: {
-    Authorization:
-      sessionStorage.getItem("_token") && sessionStorage.getItem("_token").length !== 0
-        ? `Bearer ${sessionStorage.getItem("_token")}`
-        : "",
-    // "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Origin": "*",
   },
 });
 

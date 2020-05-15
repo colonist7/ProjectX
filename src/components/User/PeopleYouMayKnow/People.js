@@ -4,15 +4,24 @@ import { connect } from "react-redux";
 import { getUsers, followUser } from "../../../redux/reducers/User/UserReducer";
 
 const PeopleYouMayKnow = (props) => {
-  const { users, getAllUsers, follow } = props;
+  const { users, userFollowing, getAllUsers, follow, userName, email } = props;
+  let u = [...users];
 
-  return <PeopleShell users={users} getAllUsers={getAllUsers} follow={follow} />;
+  for (let user of userFollowing) {
+    try {
+      u = u.filter((x) => x.userName !== user.userName && x.email !== user.email);
+    } catch (e) {}
+  }
+
+  u = u.filter((x) => x.userName !== userName && x.email !== email);
+
+  return <PeopleShell users={u} getAllUsers={getAllUsers} follow={follow} />;
 };
 
 const mapStateToProps = (state) => {
-  let { users } = state.userReducer;
+  let { users, userFollowing, userName, email } = state.userReducer;
 
-  return { users };
+  return { users, userFollowing, userName, email };
 };
 
 const mapDispatchToProps = (dispatch) => {
