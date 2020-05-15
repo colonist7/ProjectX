@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Form, Button, Container, Row, FormLabel } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 class AuthShell extends Component {
   state = { name: "", password: "" };
@@ -11,7 +11,7 @@ class AuthShell extends Component {
 
   render() {
     let { name, password } = this.state;
-    let { authUser } = this.props;
+    let { authUser, isAuthenticated } = this.props;
 
     return (
       <Container>
@@ -36,6 +36,8 @@ class AuthShell extends Component {
             Don't have an account? <Link to="/register">Register Now</Link>
           </h6>
         </Row>
+        {isAuthenticated && <Redirect to={"/user"} />}
+        {isAuthenticated && <p>LOGGED IN</p>}
       </Container>
     );
   }

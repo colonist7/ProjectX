@@ -1,7 +1,7 @@
 import React from "react";
 import PeopleShell from "./People.shell";
 import { connect } from "react-redux";
-import { getUsers, getAllFollowers, getFollowingUsers, followUser } from "../../../redux/reducers/User/UserReducer";
+import { getUsers, followUser } from "../../../redux/reducers/User/UserReducer";
 
 const PeopleYouMayKnow = (props) => {
   const { users, getAllUsers, follow } = props;
@@ -19,12 +19,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getAllUsers: () => {
       dispatch(getUsers());
-    },
-    getFollowers: () => {
-      dispatch(getAllFollowers());
-    },
-    getFollowing: () => {
-      dispatch(getFollowingUsers());
     },
     follow: (userId, userName) => {
       dispatch(followUser(userId, userName));

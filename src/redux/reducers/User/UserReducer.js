@@ -5,10 +5,11 @@ const LOAD_USER_INFO = "LOAD_USER_INFO";
 const GET_ALL_USERS = "GET_ALL_USERS";
 const SET_USER_FOLLOWERS = "USER_FOLLOWERS";
 const SET_USER_FOLLOWING = "USER_FOLLOWING";
+const CLEAR_USER = "CLEAR_USER";
 
 const initialState = {
-  token: sessionStorage.getItem("_token"),
-  id: sessionStorage.getItem("_id"),
+  token: "",
+  id: "",
   userName: "",
   email: "",
   userFollowers: [],
@@ -26,15 +27,29 @@ export const userReducer = (state = initialState, action) => {
       return { ...state, userFollowers: action.payload.data.followers };
     case SET_USER_FOLLOWING:
       return { ...state, userFollowing: action.payload.data.followings };
+    case CLEAR_USER:
+      return { ...initialState };
     default:
       return state;
   }
 };
 
-export const getUserInfo = (id) => (dispatch) => {
+export const getUserInfo = (id = sessionStorage.getItem("_id")) => (dispatch) => {
   getUser(id).then((res) => {
     if (res.data.success) {
       dispatch({ type: LOAD_USER_INFO, payload: res.data });
+
+      getFollowers().then((res) => {
+        if (res.data.success) {
+          dispatch({ type: SET_USER_FOLLOWERS, payload: res.data });
+        }
+      });
+
+      getFollowing().then((res) => {
+        if (res.data.success) {
+          dispatch({ type: SET_USER_FOLLOWING, payload: res.data });
+        }
+      });
     }
   });
 };
@@ -59,18 +74,6 @@ export const followUser = (userId, userName) => (dispatch) => {
   });
 };
 
-export const getAllFollowers = () => (dispatch) => {
-  getFollowers().then((res) => {
-    if (res.data.success) {
-      dispatch({ type: SET_USER_FOLLOWERS, payload: res.data });
-    }
-  });
-};
-
-export const getFollowingUsers = () => (dispatch) => {
-  getFollowing().then((res) => {
-    if (res.data.success) {
-      dispatch({ type: SET_USER_FOLLOWING, payload: res.data });
-    }
-  });
+export const clearUser = () => (dispatch) => {
+  dispatch({ type: CLEAR_USER });
 };

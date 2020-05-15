@@ -1,24 +1,39 @@
 import React from "react";
 import UserShell from "./User.shell";
 import { connect } from "react-redux";
-import { getUserInfo, getAllFollowers, getFollowingUsers } from "../../../redux/reducers/User/UserReducer";
+import { getUserInfo, clearUser } from "../../../redux/reducers/User/UserReducer";
+import { logout } from "../../../redux/reducers/Auth/AuthReducer";
 
 const User = (props) => {
-  const { id, userName, email, getUser } = props;
+  const { id, userName, email, getUser, isAuthenticated, logOut } = props;
 
-  return <UserShell userName={userName} email={email} id={id} getUser={getUser} />;
+  return (
+    <UserShell
+      userName={userName}
+      email={email}
+      id={id}
+      getUser={getUser}
+      isAuthenticated={isAuthenticated}
+      logOut={logOut}
+    />
+  );
 };
 
 const mapStateToProps = (state) => {
-  let { id, userName, email } = state.userReducer;
+  let { userName, email } = state.userReducer;
+  let { isAuthenticated } = state.authReducer;
 
-  return { id, userName, email };
+  return { userName, email, isAuthenticated };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getUser: (id) => {
-      dispatch(getUserInfo(id));
+    getUser: () => {
+      dispatch(getUserInfo());
+    },
+    logOut: () => {
+      dispatch(logout());
+      dispatch(clearUser());
     },
   };
 };

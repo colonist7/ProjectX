@@ -18,7 +18,7 @@ class PeopleShell extends Component {
     return (
       <UsersBlock>
         <h5 className="title">People you may know</h5>
-        {users && (
+        {users && users.length > 0 && (
           <CarouselProvider
             className="users-slider"
             visibleSlides={3}

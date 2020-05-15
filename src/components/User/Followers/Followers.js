@@ -1,12 +1,12 @@
 import React from "react";
 import FollowersShell from "./Followers.shell";
 import { connect } from "react-redux";
-import { getAllFollowers, followUser } from "../../../redux/reducers/User/UserReducer";
+import { followUser } from "../../../redux/reducers/User/UserReducer";
 
 const Followers = (props) => {
-  const { userFollowers, follow, getFollowers } = props;
+  const { userFollowers, follow } = props;
 
-  return <FollowersShell followers={userFollowers} follow={follow} getFollowers={getFollowers} />;
+  return <FollowersShell followers={userFollowers} follow={follow} />;
 };
 
 const mapStateToProps = (state) => {
@@ -17,9 +17,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getFollowers: () => {
-      dispatch(getAllFollowers());
-    },
     follow: (userId, userName) => {
       dispatch(followUser(userId, userName));
     },

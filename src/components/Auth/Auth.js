@@ -4,8 +4,8 @@ import AuthShell from "./Auth.shell";
 import { auth } from "../../redux/reducers/Auth/AuthReducer";
 
 const Auth = (props) => {
-  const { authUser } = props;
-  return <AuthShell authUser={authUser} />;
+  const { authUser, isAuthenticated } = props;
+  return <AuthShell authUser={authUser} isAuthenticated={isAuthenticated} />;
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -16,4 +16,10 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Auth);
+const mapStateToProps = (state) => {
+  const { isAuthenticated } = state.authReducer;
+
+  return { isAuthenticated };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

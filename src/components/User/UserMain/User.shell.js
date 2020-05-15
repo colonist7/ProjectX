@@ -1,21 +1,28 @@
 import React, { Component } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row, Button } from "react-bootstrap";
 import UserInfo from "../UserInfo/UserInfo";
 import PeopleYouMayKnow from "../PeopleYouMayKnow/People";
 import Followers from "../Followers/Followers";
 import Following from "../Following/Following";
+import { Redirect } from "react-router-dom";
 
 class UserShell extends Component {
   componentDidMount() {
-    console.log(this.props);
-    this.props.getUser(this.props.id);
+    this.props.getUser();
   }
 
   render() {
-    const { userName, email } = this.props;
+    const { userName, email, isAuthenticated, logOut } = this.props;
 
     return (
       <Container>
+        <Button
+          onClick={(e) => {
+            logOut();
+          }}
+        >
+          LOG OUT
+        </Button>
         <Row>
           <Col lg={4}>
             <div>
@@ -27,6 +34,7 @@ class UserShell extends Component {
           </Col>
           <Col lg="8">Your Posts</Col>
         </Row>
+        {!isAuthenticated && <Redirect to="/login" />}
       </Container>
     );
   }

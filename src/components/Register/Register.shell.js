@@ -25,7 +25,7 @@ class RegisterShell extends Component {
 
   render() {
     const { userName, userMail, userPassword, confirmPassword, arePasswordsEqual } = this.state;
-    const { register, setRegisterError, setRegisterLoading, resetForm } = this.props;
+    const { register, resetForm } = this.props;
 
     if (resetForm === true) {
       this.reset();

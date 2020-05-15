@@ -1,5 +1,4 @@
 import * as axios from "axios";
-import store from "../redux/store";
 
 const instance = axios.create({
   // withCredentials: true,

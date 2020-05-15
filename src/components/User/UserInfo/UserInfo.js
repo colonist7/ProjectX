@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import UserInfoShell from "./UserInfo.shell";
 import { connect } from "react-redux";
 
@@ -13,9 +13,5 @@ const mapStateToProps = (state) => {
 
   return { userName, email };
 };
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {};
-// };
 
 export default connect(mapStateToProps)(UserInfo);

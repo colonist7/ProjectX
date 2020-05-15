@@ -8,9 +8,9 @@ import { Image } from "react-bootstrap";
 import { UsersBlock } from "./Followers.style";
 
 class FollwersShell extends Component {
-  componentDidMount = () => {
-    this.props.getFollowers();
-  };
+  // componentDidMount = () => {
+  //   this.props.getFollowers();
+  // };
 
   componentDidUpdate = () => {
     // debugger;
@@ -22,7 +22,7 @@ class FollwersShell extends Component {
     return (
       <UsersBlock>
         <h5 className="title">Follwers</h5>
-        {followers && (
+        {followers && followers.length > 0 && (
           <CarouselProvider
             className="users-slider"
             visibleSlides={3}
