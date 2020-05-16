@@ -1,5 +1,4 @@
 import { auth as authApi } from "../../../api/auth.api";
-import instance from "../../../api/instance.api";
 
 export const CHECK_CREDENTIALS = "CHECK_CREDENTIALS";
 export const SET_AUTHENTICATED = "SET_AUTHENTHICATED";

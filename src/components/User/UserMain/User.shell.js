@@ -5,6 +5,7 @@ import PeopleYouMayKnow from "../PeopleYouMayKnow/People";
 import Followers from "../Followers/Followers";
 import Following from "../Following/Following";
 import { Redirect } from "react-router-dom";
+import Posts from "../Posts/Posts";
 
 class UserShell extends Component {
   componentDidMount() {
@@ -32,7 +33,9 @@ class UserShell extends Component {
             <Followers />
             <Following />
           </Col>
-          <Col lg="8">Your Posts</Col>
+          <Col lg="8">
+            <Posts />
+          </Col>
         </Row>
         {!isAuthenticated && <Redirect to="/login" />}
       </Container>
