@@ -22,7 +22,7 @@ class PostsShell extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    if (this.setState.formData.post.length === 0) {
+    if (this.state.formData.post.length === 0) {
       return;
     } else {
       this.props.tweet(this.state.formData.post);
@@ -31,14 +31,15 @@ class PostsShell extends Component {
   };
 
   formatData = (date) => {
-    let formated = new Date(+date * 1000);
+    let formated = new Date(date);
     console.log(formated);
     let str = formated.getDate() + "/" + (formated.getMonth() + 1) + "/" + formated.getFullYear();
     return str;
   };
-  // componentDidMount = () => {
-  //   this.props.getPosts();
-  // };
+
+  componentDidMount = () => {
+    this.props.getTweets();
+  };
 
   componentDidUpdate = () => {
     // debugger;

@@ -19,3 +19,32 @@ export const tweet = (tweetText) => {
     options
   );
 };
+
+export const getTweets = (UserId = "", OnlyFollowings = "") => {
+  const options = {
+    headers: {
+      Authorization:
+        sessionStorage.getItem("_token") && sessionStorage.getItem("_token").length !== 0
+          ? `Bearer ${sessionStorage.getItem("_token")}`
+          : "",
+      "Access-Control-Allow-Origin": "*",
+    },
+  };
+
+  const id = UserId.length > 0 ? "UserId=" + UserId : "";
+  const of = "OnlyFollowings=" + OnlyFollowings;
+  let query = "";
+
+  if (UserId.length > 0 && typeof (OnlyFollowings !== "string")) {
+    debugger;
+    query = "?" + id + "&" + of;
+  } else if (typeof OnlyFollowings !== "string" && UserId.length === 0) {
+    debugger;
+    query = "?" + of;
+  } else if (typeof OnlyFollowings === "string" && UserId.length > 0) {
+    debugger;
+    query = "?" + id;
+  }
+
+  return instance.get("/api/Tweets/Get" + query, options);
+};

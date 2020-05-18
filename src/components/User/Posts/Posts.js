@@ -1,11 +1,11 @@
 import React from "react";
 import PostsShell from "./Posts.shell";
 import { connect } from "react-redux";
-import { sendTweet } from "../../../redux/reducers/User/UserReducer";
+import { sendTweet, getUserTweets } from "../../../redux/reducers/User/UserReducer";
 
 const Posts = (props) => {
-  const { tweets, userName, tweet } = props;
-  return <PostsShell userName={userName} tweets={tweets} tweet={tweet} />;
+  const { tweets, userName, tweet, getTweets } = props;
+  return <PostsShell userName={userName} tweets={tweets} tweet={tweet} getTweets={getTweets} />;
 };
 
 const mapStateToProps = (state) => {
@@ -17,6 +17,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     tweet: (tweetText) => {
       dispatch(sendTweet(tweetText));
+    },
+    getTweets: () => {
+      dispatch(getUserTweets());
     },
   };
 };

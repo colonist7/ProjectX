@@ -1,6 +1,6 @@
 import { getUser, getAllUsers } from "../../../api/user.api";
 import { follow, getFollowing, getFollowers } from "../../../api/follow.api";
-import { tweet } from "../../../api/tweets.api";
+import { tweet, getTweets } from "../../../api/tweets.api";
 
 const LOAD_USER_INFO = "LOAD_USER_INFO";
 const GET_ALL_USERS = "GET_ALL_USERS";
@@ -34,7 +34,12 @@ export const userReducer = (state = initialState, action) => {
       return { ...initialState };
     case GET_TWEET:
       let tweets = [...state.tweets];
-      tweets.push(action.payload);
+      for (let tweet of action.payload.tweets) {
+        if (tweets.filter((x) => x.id === tweet.id).length === 0) {
+          tweets.push(tweet);
+        }
+      }
+      tweets.sort((a, b) => (a.postDate < b.postDate ? 1 : -1));
       return { ...state, tweets: tweets };
     default:
       return state;
@@ -87,6 +92,18 @@ export const clearUser = () => (dispatch) => {
 
 export const sendTweet = (tweetText) => (dispatch) => {
   tweet(tweetText).then((res) => {
+    if (res.data.success) {
+      getTweets().then((res) => {
+        if (res.data.success) {
+          dispatch({ type: GET_TWEET, payload: res.data.data });
+        }
+      });
+    }
+  });
+};
+
+export const getUserTweets = () => (dispatch) => {
+  getTweets().then((res) => {
     if (res.data.success) {
       dispatch({ type: GET_TWEET, payload: res.data.data });
     }
