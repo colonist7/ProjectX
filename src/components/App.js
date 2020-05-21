@@ -6,6 +6,8 @@ import Auth from "./Auth/Auth";
 import Register from "./Register/Register";
 import Home from "./Home/Home";
 import User from "./User/UserMain/User";
+import NewsFeedContainer from "./NewsFeed/NewsFeedContainer";
+import ProtectedRoute from "../utils/ProtectedRoute";
 
 function App() {
   return (
@@ -25,6 +27,9 @@ function MainRouter() {
               <Link to="/">Home</Link>
             </li>
             <li>
+              <Link to="/newsfeed">NewsFeed</Link>
+            </li>
+            <li>
               <Link to="/login">Login</Link>
             </li>
           </ul>
@@ -39,6 +44,7 @@ function MainRouter() {
           <Route path="/user">
             <User />
           </Route>
+          <ProtectedRoute component={NewsFeedContainer} path="/newsfeed" />
           <Route path="/">
             <Home />
           </Route>
