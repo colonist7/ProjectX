@@ -8,49 +8,29 @@ import Home from "./Home/Home";
 import User from "./User/UserMain/User";
 import NewsFeedContainer from "./NewsFeed/NewsFeedContainer";
 import ProtectedRoute from "../utils/ProtectedRoute";
+import PublicRoute from "../utils/PublicRoute";
+import SideBar from "./SideBar/SideBar";
 
 function App() {
   return (
     <Provider store={Store}>
-      <MainRouter />
+      <Router>
+        <SideBar />
+        <MainRouter />
+      </Router>
     </Provider>
   );
 }
 
 function MainRouter() {
   return (
-    <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/newsfeed">NewsFeed</Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-          </ul>
-        </nav>
-        <Switch>
-          <Route path="/login">
-            <Auth />
-          </Route>
-          <Route path="/register">
-            <Register />
-          </Route>
-          <Route path="/user">
-            <User />
-          </Route>
-          <ProtectedRoute component={NewsFeedContainer} path="/newsfeed" />
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+    <Switch>
+      <PublicRoute restricted component={Auth} path="/login" />
+      <PublicRoute restricted component={Register} path="/register" />
+      <ProtectedRoute component={User} path="/user" />
+      <ProtectedRoute component={NewsFeedContainer} path="/newsfeed" />
+      <PublicRoute component={Home} path="/" />
+    </Switch>
   );
 }
 
