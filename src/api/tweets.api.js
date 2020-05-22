@@ -36,13 +36,13 @@ export const getTweets = (UserId = "", OnlyFollowings = "") => {
   let query = "";
 
   if (UserId.length > 0 && typeof (OnlyFollowings !== "string")) {
-    debugger;
+    // debugger;
     query = "?" + id + "&" + of;
   } else if (typeof OnlyFollowings !== "string" && UserId.length === 0) {
-    debugger;
+    // debugger;
     query = "?" + of;
   } else if (typeof OnlyFollowings === "string" && UserId.length > 0) {
-    debugger;
+    // debugger;
     query = "?" + id;
   }
 
