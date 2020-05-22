@@ -7,7 +7,7 @@ export const UserInfoBlock = styled.div`
 
   .image-block {
     width: 100%;
-    margin: 10px;
+    margin: 0 0 10px 0;
     height: 300px;
     border: 2px solid #3355ff;
     border-radius: 30px;

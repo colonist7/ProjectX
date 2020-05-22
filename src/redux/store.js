@@ -5,12 +5,14 @@ import { newsfeedReducer } from "./reducers/NewsFeed/newsfeed.reducer";
 import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
 import thunkMiddleWare from "redux-thunk";
+import { commentsReducer } from "./reducers/Comments/CommentsReducer";
 
 const reducers = combineReducers({
   authReducer,
   registerReducer,
   userReducer,
   newsfeedReducer,
+  commentsReducer,
 });
 
 let store = configureStore({
