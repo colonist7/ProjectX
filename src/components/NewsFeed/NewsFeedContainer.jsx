@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import WritePost from "./WritePost";
 import Posts from "./Posts";
 import { connect } from "react-redux";
-import { createPost, getPosts } from "../../redux/reducers/NewsFeed/Newsfeed.reducer";
+import { createPost, getPosts } from "../../redux/reducers/NewsFeed/newsfeed.reducer";
 import * as signalR from "@microsoft/signalr";
 
 const connection = new signalR.HubConnectionBuilder()
