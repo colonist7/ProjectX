@@ -24,9 +24,8 @@ async function socketStart() {
   }
 }
 
-connection.on("ReceiveMessage", (user, message) => {
-  const encodedMsg = `${user} says ${message}`;
-  console.log(encodedMsg);
+connection.on("newTweet", (data) => {
+  console.log(data);
 });
 
 class PostsShell extends Component {
@@ -37,7 +36,7 @@ class PostsShell extends Component {
   };
 
   componentDidMount = () => {
-    socketStart();
+    // socketStart();
     this.props.getTweets();
   };
 

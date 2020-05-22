@@ -11,5 +11,5 @@ export const sendComment = (id, text) => {
     },
   };
 
-  return instance.post("/api/Comments/Post", { tweetID: id + "", text: text }, options);
+  return instance.post("/api/Comments/Post", { tweetID: id, text: text }, options);
 };
