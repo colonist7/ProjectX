@@ -1,7 +1,7 @@
 import { authReducer } from "./reducers/Auth/AuthReducer";
 import { registerReducer } from "./reducers/Register/RegisterReducer";
 import { userReducer } from "./reducers/User/UserReducer";
-import { newsfeedReducer } from "./reducers/NewsFeed/newsfeed.reducer";
+import { newsfeedReducer } from "./reducers/NewsFeed/Newsfeed.reducer";
 import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
 import thunkMiddleWare from "redux-thunk";

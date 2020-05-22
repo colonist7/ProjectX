@@ -23,6 +23,8 @@ export const newsfeedReducer = (state = initialState, action) => {
       return { ...state, createPostError: false, createPostLoading: false };
     case CREATE_POST_ERROR:
       return { ...state, createPostError: true, createPostLoading: false };
+    case GET_POSTS_SUCCESS:
+      return { ...state, posts: action.payload.tweets };
     default:
       return state;
   }
@@ -44,8 +46,9 @@ export const getPosts = () => (dispatch) => {
   dispatch({ type: GET_POSTS });
   getTweets().then(
     (res) => {
-      debugger;
-      dispatch({ type: GET_POSTS_SUCCESS, payload: res });
+      if (res.data.success) {
+        dispatch({ type: GET_POSTS_SUCCESS, payload: res.data.data });
+      }
     },
     () => {
       dispatch({ type: GET_POSTS_ERROR });

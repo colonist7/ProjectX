@@ -1,21 +1,35 @@
 import React, { Component } from "react";
-import { Card } from "react-bootstrap";
-
+import { Container } from "react-bootstrap";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import { CommentBar } from "./NewsFeed.style";
 class Posts extends Component {
   state = {};
+
   render() {
+    const { posts } = this.props;
+
     return (
-      <Card className="mt-3">
-        <Card.Header>name surname</Card.Header>
-        <Card.Body>
-          <blockquote className="blockquote mb-0">
-            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante. </p>
-            <footer className="blockquote-footer">
-              <cite title="Source Title">date</cite>
-            </footer>
-          </blockquote>
-        </Card.Body>
-      </Card>
+      <Container>
+        {posts &&
+          posts.map((x, index) => {
+            return (
+              <CommentBar key={index}>
+                <h6 className="title">
+                  {x.userName} <span>{x.postDate}</span>
+                </h6>
+                <div className="comment">
+                  <h3>{x.tweetText}</h3>
+                </div>
+                <ButtonGroup variant="text" color="primary" aria-label="text primary button group">
+                  <Button>Like</Button>
+                  <Button>Comment</Button>
+                </ButtonGroup>
+              </CommentBar>
+            );
+          })}
+      </Container>
     );
   }
 }
