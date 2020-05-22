@@ -10,6 +10,7 @@ class SideBar extends Component {
       { label: "Home", path: "/", isVisible: true },
       { label: "NewsFeed", path: "/newsfeed", isVisible: isAuth },
       { label: "User", path: "/user", isVisible: isAuth },
+      { label: "Chat", path: "/chat", isVisible: isAuth },
       { label: "Login", path: "/login", isVisible: !isAuth },
     ];
     return (

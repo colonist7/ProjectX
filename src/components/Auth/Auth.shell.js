@@ -37,7 +37,6 @@ class AuthShell extends Component {
           </h6>
         </Row>
         {isAuthenticated && <Redirect to={"/user"} />}
-        {isAuthenticated && <p>LOGGED IN</p>}
       </Container>
     );
   }

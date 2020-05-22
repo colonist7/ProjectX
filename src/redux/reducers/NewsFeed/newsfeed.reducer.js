@@ -23,8 +23,14 @@ export const newsfeedReducer = (state = initialState, action) => {
       return { ...state, createPostError: false, createPostLoading: false };
     case CREATE_POST_ERROR:
       return { ...state, createPostError: true, createPostLoading: false };
+    case GET_POSTS:
+      return { ...state, postsLoading: true, postsError: false };
     case GET_POSTS_SUCCESS:
-      return { ...state, posts: action.payload.tweets };
+      let posts = action.payload;
+      posts.sort((a, b) => b.postDate - a.postDate);
+      return { ...state, postsLoading: false, createPostLoading: false, posts: posts };
+    case GET_POSTS_ERROR:
+      return { ...state, postsLoading: false, postsError: true };
     default:
       return state;
   }
@@ -35,6 +41,7 @@ export const createPost = (post) => (dispatch) => {
   tweet(post).then(
     () => {
       dispatch({ type: CREATE_POST_SUCCESS });
+      dispatch(getPosts());
     },
     () => {
       dispatch({ type: CREATE_POST_ERROR });
@@ -46,9 +53,17 @@ export const getPosts = () => (dispatch) => {
   dispatch({ type: GET_POSTS });
   getTweets().then(
     (res) => {
-      if (res.data.success) {
-        dispatch({ type: GET_POSTS_SUCCESS, payload: res.data.data });
-      }
+      let myPosts = res.data.data.tweets;
+      getTweets("", true).then(
+        (res) => {
+          let friendsPosts = res.data.data.tweets;
+          let allPosts = [...myPosts, ...friendsPosts];
+          dispatch({ type: GET_POSTS_SUCCESS, payload: allPosts });
+        },
+        () => {
+          dispatch({ type: GET_POSTS_ERROR });
+        }
+      );
     },
     () => {
       dispatch({ type: GET_POSTS_ERROR });

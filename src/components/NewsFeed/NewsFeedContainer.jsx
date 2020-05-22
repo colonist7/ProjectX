@@ -31,11 +31,11 @@ class NewsFeedContainer extends Component {
     socketStart();
   };
   render() {
-    let { createPost, createPostLoading, createPostError, posts } = this.props;
+    let { createPost, createPostLoading, createPostError, posts, postsLoading, postsError } = this.props;
     return (
       <>
         <WritePost createPost={createPost} createPostLoading={createPostLoading} createPostError={createPostError} />
-        <Posts posts={posts} />
+        <Posts posts={posts} postsLoading={postsLoading} postsError={postsError} />
       </>
     );
   }
