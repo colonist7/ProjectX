@@ -10,11 +10,11 @@ class NewsFeedContainer extends Component {
     this.props.getPosts();
   };
   render() {
-    let { createPost, createPostLoading, createPostError } = this.props;
+    let { createPost, createPostLoading, createPostError, posts, postsLoading, postsError } = this.props;
     return (
       <>
         <WritePost createPost={createPost} createPostLoading={createPostLoading} createPostError={createPostError} />
-        <Posts />
+        <Posts posts={posts} postsLoading={postsLoading} postsError={postsError} />
       </>
     );
   }
