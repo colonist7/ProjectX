@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { Provider } from "react-redux";
 import Store from "../redux/store";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
@@ -11,16 +11,23 @@ import NewsFeedContainer from "./NewsFeed/NewsFeedContainer";
 import ProtectedRoute from "../utils/ProtectedRoute";
 import PublicRoute from "../utils/PublicRoute";
 import SideBar from "./SideBar/SideBar";
+import { socketStart } from "../redux/Socket";
 
-function App() {
-  return (
-    <Provider store={Store}>
-      <Router>
-        <SideBar />
-        <MainRouter />
-      </Router>
-    </Provider>
-  );
+class App extends Component {
+  componentDidMount() {
+    socketStart();
+  }
+
+  render() {
+    return (
+      <Provider store={Store}>
+        <Router>
+          <SideBar />
+          <MainRouter />
+        </Router>
+      </Provider>
+    );
+  }
 }
 
 function MainRouter() {
