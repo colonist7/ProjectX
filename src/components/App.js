@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { Provider } from "react-redux";
 import Store from "../redux/store";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
@@ -6,13 +6,20 @@ import Auth from "./Auth/Auth";
 import Register from "./Register/Register";
 import Home from "./Home/Home";
 import User from "./User/UserMain/User";
+import { socketStart } from "../redux/Socket";
 
-function App() {
-  return (
-    <Provider store={Store}>
-      <MainRouter />
-    </Provider>
-  );
+class App extends Component {
+  componentDidMount() {
+    socketStart();
+  }
+
+  render() {
+    return (
+      <Provider store={Store}>
+        <MainRouter />
+      </Provider>
+    );
+  }
 }
 
 function MainRouter() {

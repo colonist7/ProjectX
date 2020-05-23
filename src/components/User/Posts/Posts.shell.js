@@ -7,26 +7,6 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Comments from "../../Comments/Comments";
-import * as signalR from "@microsoft/signalr";
-
-const connection = new signalR.HubConnectionBuilder()
-  .withUrl("http://localhost:8080/tweetHub", { accessTokenFactory: () => sessionStorage.getItem("_token") })
-  .configureLogging(signalR.LogLevel.Information)
-  .build();
-
-async function socketStart() {
-  try {
-    await connection.start();
-    console.log("connected");
-  } catch (err) {
-    console.log(err);
-    setTimeout(() => socketStart(), 5000);
-  }
-}
-
-connection.on("newTweet", (data) => {
-  console.log(data);
-});
 
 class PostsShell extends Component {
   state = {
@@ -36,7 +16,6 @@ class PostsShell extends Component {
   };
 
   componentDidMount = () => {
-    // socketStart();
     this.props.getTweets();
   };
 
