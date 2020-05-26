@@ -6,6 +6,7 @@ import { chatReducer } from "./reducers/Chat/chat.reducer";
 import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
 import thunkMiddleWare from "redux-thunk";
+import { commentsReducer } from "./reducers/Comments/CommentsReducer";
 
 const reducers = combineReducers({
   authReducer,
@@ -13,6 +14,7 @@ const reducers = combineReducers({
   userReducer,
   newsfeedReducer,
   chatReducer,
+  commentsReducer,
 });
 
 let store = configureStore({

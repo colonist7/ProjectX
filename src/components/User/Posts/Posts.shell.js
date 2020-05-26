@@ -6,12 +6,24 @@ import { CommentBar } from "./Posts.style";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Comments from "../../Comments/Comments";
 
 class PostsShell extends Component {
   state = {
     formData: {
       post: "",
     },
+  };
+
+  componentDidMount = () => {
+    this.props.getTweets();
+  };
+
+  componentWillUnmount = () => {};
+
+  componentDidUpdate = () => {
+    // debugger;
+    // this.props.getPosts();
   };
 
   onHandleChange = (e) => {
@@ -32,18 +44,8 @@ class PostsShell extends Component {
 
   formatData = (date) => {
     let formated = new Date(date);
-    console.log(formated);
     let str = formated.getDate() + "/" + (formated.getMonth() + 1) + "/" + formated.getFullYear();
     return str;
-  };
-
-  componentDidMount = () => {
-    this.props.getTweets();
-  };
-
-  componentDidUpdate = () => {
-    // debugger;
-    // this.props.getPosts();
   };
 
   render() {
@@ -81,6 +83,9 @@ class PostsShell extends Component {
                       <Button>Like</Button>
                       <Button>Comment</Button>
                     </ButtonGroup>
+                    <div>
+                      <Comments tweetId={x.id} />
+                    </div>
                   </CommentBar>
                 );
               })}

@@ -17,9 +17,9 @@ class SideBar extends Component {
       <nav>
         <ul>
           {links.map(
-            (link) =>
+            (link, index) =>
               link.isVisible && (
-                <li>
+                <li key={"l" + index}>
                   <Link to={link.path}>{link.label}</Link>
                 </li>
               )
