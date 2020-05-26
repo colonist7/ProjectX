@@ -11,11 +11,12 @@ import NewsFeedContainer from "./NewsFeed/NewsFeedContainer";
 import ProtectedRoute from "../utils/ProtectedRoute";
 import PublicRoute from "../utils/PublicRoute";
 import SideBar from "./SideBar/SideBar";
-import { socketStart } from "../redux/Socket";
+import { socketStart, chatStart } from "../redux/Socket";
 
 class App extends Component {
   componentDidMount() {
     socketStart();
+    chatStart();
   }
 
   render() {

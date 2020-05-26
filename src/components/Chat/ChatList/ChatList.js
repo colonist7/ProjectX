@@ -1,21 +1,30 @@
 import React from "react";
 import ChatListShell from "./ChatList.shell";
 import { connect } from "react-redux";
+import { setUserInfo as setInfo } from "../../../redux/reducers/Chat/chat.reducer";
+import { getUsers as users } from "../../../redux/reducers/User/UserReducer";
 
 const ChatList = (props) => {
-  const {} = props;
+  const { users, setUserInfo, getUsers } = props;
 
-  return <ChatListShell />;
+  return <ChatListShell users={users} setUserInfo={setUserInfo} getUsers={getUsers} />;
 };
 
 const mapStateToProps = (state) => {
-  let {} = state.userReducer;
+  let { users } = state.userReducer;
 
-  return {};
+  return { users };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    setUserInfo: (user) => {
+      dispatch(setInfo(user));
+    },
+    getUsers: () => {
+      dispatch(users());
+    },
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatList);

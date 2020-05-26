@@ -8,17 +8,9 @@ import Messages from "../Messages/Messages";
 import ChatList from "../ChatList/ChatList";
 
 class ChatShell extends Component {
-  // componentDidMount = () => {
-  //   this.props.getFollowers();
-  // };
-
-  componentDidUpdate = () => {
-    // debugger;
-  };
+  state = {};
 
   render() {
-    const {} = this.props;
-
     return (
       <Container>
         <Row style={{ border: "2px solid #efefef", borderRight: "none" }}>

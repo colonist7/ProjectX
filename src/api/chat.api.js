@@ -11,12 +11,5 @@ export const getMessages = (fromUser, toUser) => {
     },
   };
 
-  return instance.post(
-    "​/api​/Messages​/Get",
-    {
-      fromUser,
-      toUser,
-    },
-    options
-  );
+  return instance.get("/api/Messages/Get?ToUserId=" + toUser + "&FromUserId=" + fromUser, options);
 };

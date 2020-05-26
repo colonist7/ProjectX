@@ -1,24 +1,44 @@
 import React, { Component } from "react";
-import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-import { Image, Container, Col, Row } from "react-bootstrap";
+import {} from "@fortawesome/free-solid-svg-icons";
+import { Image } from "react-bootstrap";
 import { MessagesTop, MessagesBody, MessagesBottom, MessagesBase, Message } from "./Messages.style";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import store from "../../../redux/store";
+import { chat } from "../../../redux/Socket";
 
 class MessagesShell extends Component {
+  state = {
+    message: "",
+  };
   // componentDidMount = () => {
-  //   this.props.getFollowers();
+  //   console.log(store.getState());
   // };
 
   componentDidUpdate = () => {
-    // debugger;
+    if (this.props.userInfo) {
+      this.props.getMessages(this.props.currentUser, this.props.userInfo.id);
+    }
+  };
+
+  sendMessage = (e, currentUser, userId, message) => {
+    e.preventDefault();
+    chat.invoke("SendMessage", currentUser, userId, message).catch((err) => console.error(err));
+    this.resetMessage();
+  };
+
+  handleChange = (txt) => {
+    this.setState({ message: txt });
+  };
+
+  resetMessage = () => {
+    this.setState({ message: "" });
   };
 
   render() {
-    const {} = this.props;
+    const { userInfo, messages, currentUser } = this.props;
 
     return (
       <MessagesBase>
@@ -27,20 +47,19 @@ class MessagesShell extends Component {
             <Image src={require("../../../assets/images/profile.png")} />
           </div>
           <div>
-            <h6>John Doe</h6>
+            <h6>{userInfo && userInfo.userName}</h6>
             <p>5 hours ago</p>
           </div>
         </MessagesTop>
         <MessagesBody>
-          <Message currentUser={true}>LOL, your wife, Mary did</Message>
-          <Message currentUser={false}>
-            Really ? Who told you ? I was going to keep it in secret yet , until I've passed driving exams
-          </Message>
-          <Message currentUser={true}>I've heard, you bought new car</Message>
-          <Message currentUser={true}>Fine, you?</Message>
-          <Message currentUser={false}>How Are you ?</Message>
-          <Message currentUser={true}>Hey</Message>
-          <Message currentUser={false}>Hey dude</Message>
+          {messages &&
+            messages.map((mes, index) => {
+              return (
+                <Message currentUser={mes.fromUser.id == currentUser} key={index} title={mes.sendDate}>
+                  {mes.text}
+                </Message>
+              );
+            })}
         </MessagesBody>
         <MessagesBottom>
           <div style={{ display: "flex" }}>
@@ -51,8 +70,18 @@ class MessagesShell extends Component {
               id="outlined-basic"
               label="Write your message here"
               variant="outlined"
+              onChange={(e) => {
+                this.handleChange(e.value);
+              }}
             />
-            <Button type="submit">Send</Button>
+            <Button
+              type="submit"
+              onClick={(e) => {
+                this.sendMessage(e, currentUser, userInfo.id, this.state.message);
+              }}
+            >
+              Send
+            </Button>
           </div>
         </MessagesBottom>
       </MessagesBase>

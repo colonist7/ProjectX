@@ -6,37 +6,42 @@ import { faChevronRight, faChevronLeft } from "@fortawesome/free-solid-svg-icons
 import { Image, Container, Col, Row } from "react-bootstrap";
 import { ChatListBase, ChatMember } from "./ChatList.style";
 class ChatListShell extends Component {
-  // componentDidMount = () => {
-  //   this.props.getFollowers();
-  // };
+  componentDidMount = () => {
+    this.props.getUsers();
+    this.props.setUserInfo(this.props.users[0]);
+  };
 
   componentDidUpdate = () => {
     // debugger;
   };
 
   render() {
-    const {} = this.props;
+    const { users, setUserInfo } = this.props;
 
     return (
       <ChatListBase>
-        <ChatMember>
-          <div className="image-block">
-            <Image src={require("../../../assets/images/profile.png")} />
-          </div>
-          <div>
-            <h6>John Doe</h6>
-            <p>5 hours ago</p>
-          </div>
-        </ChatMember>
-        <ChatMember>
-          <div className="image-block">
-            <Image src={require("../../../assets/images/profile.png")} />
-          </div>
-          <div>
-            <h6>John Doe</h6>
-            <p>5 hours ago</p>
-          </div>
-        </ChatMember>
+        {users &&
+          users.map((item, index) => {
+            return (
+              item &&
+              item.id !== sessionStorage.getItem("_id") && (
+                <ChatMember
+                  key={index}
+                  onClick={(e) => {
+                    setUserInfo(item);
+                  }}
+                >
+                  <div className="image-block">
+                    <Image src={require("../../../assets/images/profile.png")} />
+                  </div>
+                  <div>
+                    <h6>{item.userName}</h6>
+                    <p>5 hours ago</p>
+                  </div>
+                </ChatMember>
+              )
+            );
+          })}
       </ChatListBase>
     );
   }
