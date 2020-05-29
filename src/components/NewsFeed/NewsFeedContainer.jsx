@@ -2,40 +2,65 @@ import React, { Component } from "react";
 import WritePost from "./WritePost";
 import Posts from "./Posts";
 import { connect } from "react-redux";
-import { createPost, getPosts } from "../../redux/reducers/NewsFeed/newsfeed.reducer";
-import * as signalR from "@microsoft/signalr";
+import {
+  createPost,
+  getPosts,
+  createPostComment,
+  getPostComments,
+} from "../../redux/reducers/NewsFeed/newsfeed.reducer";
+import { connection } from "../../redux/Socket";
 
-const connection = new signalR.HubConnectionBuilder()
-  .withUrl("http://localhost:8080/tweetHub", { accessTokenFactory: () => sessionStorage.getItem("_token") })
-  .configureLogging(signalR.LogLevel.Information)
-  .build();
+// const connection = new signalR.HubConnectionBuilder()
+//   .withUrl("http://localhost:8080/tweetHub", { accessTokenFactory: () => sessionStorage.getItem("_token") })
+//   .configureLogging(signalR.LogLevel.Information)
+//   .build();
 
-async function socketStart() {
-  try {
-    await connection.start();
-    console.log("connected");
-  } catch (err) {
-    console.log(err);
-    setTimeout(() => socketStart(), 5000);
-  }
-}
+// async function socketStart() {
+//   try {
+//     await connection.start();
+//     console.log("connected");
+//   } catch (err) {
+//     console.log(err);
+//     setTimeout(() => socketStart(), 5000);
+//   }
+// }
 
-connection.on("newTweet", (data) => {
-  getPosts();
-});
+// connection.on("newTweet", (data) => {
+//   getPosts();
+// });
 
 class NewsFeedContainer extends Component {
   state = {};
   componentDidMount = () => {
     this.props.getPosts();
-    socketStart();
+    connection.on("NewTweet", (data) => {
+      this.props.getPosts();
+    });
+    connection.on("NewComment", (data) => {
+      this.props.getPostComments();
+    });
   };
   render() {
-    let { createPost, createPostLoading, createPostError, posts, postsLoading, postsError } = this.props;
+    let {
+      createPost,
+      createPostLoading,
+      createPostError,
+      posts,
+      postsLoading,
+      postsError,
+      createPostComment,
+      getPostComments,
+    } = this.props;
     return (
       <>
         <WritePost createPost={createPost} createPostLoading={createPostLoading} createPostError={createPostError} />
-        <Posts posts={posts} postsLoading={postsLoading} postsError={postsError} />
+        <Posts
+          posts={posts}
+          postsLoading={postsLoading}
+          postsError={postsError}
+          createPostComment={createPostComment}
+          getPostComments={getPostComments}
+        />
       </>
     );
   }
@@ -53,6 +78,12 @@ let mapDispatchToProps = (dispatch) => {
     },
     getPosts: () => {
       dispatch(getPosts());
+    },
+    createPostComment: (postId, comment) => {
+      dispatch(createPostComment(postId, comment));
+    },
+    getPostComments: (postId) => {
+      dispatch(getPostComments(postId));
     },
   };
 };

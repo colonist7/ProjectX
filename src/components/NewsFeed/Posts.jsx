@@ -5,12 +5,13 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { CommentBar } from "./NewsFeed.style";
 import { Spinner, Alert } from "react-bootstrap";
 import moment from "moment";
+import Post from "./Post";
 
 class Posts extends Component {
   state = {};
 
   render() {
-    let { posts, postsLoading, postsError } = this.props;
+    let { posts, postsLoading, postsError, getPostComments, createPostComment } = this.props;
     if (postsLoading)
       return (
         <Spinner animation="border" role="status">
@@ -21,18 +22,16 @@ class Posts extends Component {
     return (
       <Container>
         {posts.map((post, index) => (
-          <CommentBar key={index}>
-            <h6 className="title">
-              {post.userName} <span>{moment.unix(post.postDate).startOf().fromNow()}</span>
-            </h6>
-            <div className="comment">
-              <h3>{post.tweetText}</h3>
-            </div>
-            <ButtonGroup variant="text" color="primary" aria-label="text primary button group">
-              <Button>Like</Button>
-              <Button>Comment</Button>
-            </ButtonGroup>
-          </CommentBar>
+          <Post
+            key={post.id}
+            userName={post.userName}
+            date={post.postDate}
+            text={post.tweetText}
+            comments={post.comments}
+            id={post.id}
+            createPostComment={createPostComment}
+            getPostComments={getPostComments}
+          />
         ))}
       </Container>
     );

@@ -21,6 +21,7 @@ export const commentsReducer = (state = initialState, action) => {
 export const postComment = (id, text) => (dispatch) => {
   sendComment(id, text).then((res) => {
     if (res.data.success) {
+      debugger;
       store.dispatch(getComments(id));
     }
   });
