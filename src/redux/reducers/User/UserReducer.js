@@ -34,14 +34,14 @@ export const userReducer = (state = initialState, action) => {
 		case CLEAR_USER:
 			return { ...initialState };
 		case GET_TWEET:
-			let tweets = [...state.tweets];
-			for (let tweet of action.payload.tweets) {
-				if (tweets.filter((x) => x.id === tweet.id).length === 0) {
-					tweets.push(tweet);
-				}
-			}
-			tweets.sort((a, b) => (a.postDate < b.postDate ? 1 : -1));
-			return { ...state, tweets: tweets };
+			// let tweets = [...state.tweets];
+			// for (let tweet of action.payload.tweets) {
+			// 	if (tweets.filter((x) => x.id === tweet.id).length === 0) {
+			// 		tweets.push(tweet);
+			// 	}
+			// }
+			action.payload.tweets.sort((a, b) => (a.postDate < b.postDate ? 1 : -1));
+			return { ...state, tweets: action.payload.tweets };
 		default:
 			return state;
 	}

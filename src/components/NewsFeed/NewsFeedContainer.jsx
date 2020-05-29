@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import WritePost from "./WritePost";
-import Posts from "./Posts";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import WritePost from './WritePost';
+import Posts from './Posts';
+import { connect } from 'react-redux';
 import {
-  createPost,
-  getPosts,
-  createPostComment,
-  getPostComments,
-} from "../../redux/reducers/NewsFeed/newsfeed.reducer";
-import { connection } from "../../redux/Socket";
+	createPost,
+	getPosts,
+	createPostComment,
+	getPostComments,
+} from '../../redux/reducers/NewsFeed/newsfeed.reducer';
+import { connection } from '../../redux/Socket';
 
 // const connection = new signalR.HubConnectionBuilder()
 //   .withUrl("http://localhost:8080/tweetHub", { accessTokenFactory: () => sessionStorage.getItem("_token") })
@@ -30,62 +30,61 @@ import { connection } from "../../redux/Socket";
 // });
 
 class NewsFeedContainer extends Component {
-  state = {};
-  componentDidMount = () => {
-    this.props.getPosts();
-    connection.on("NewTweet", (data) => {
-      this.props.getPosts();
-    });
-    connection.on("NewComment", (data) => {
-      this.props.getPostComments();
-    });
-  };
-  render() {
-    let {
-      createPost,
-      createPostLoading,
-      createPostError,
-      posts,
-      postsLoading,
-      postsError,
-      createPostComment,
-      getPostComments,
-    } = this.props;
-    return (
-      <>
-        <WritePost createPost={createPost} createPostLoading={createPostLoading} createPostError={createPostError} />
-        <Posts
-          posts={posts}
-          postsLoading={postsLoading}
-          postsError={postsError}
-          createPostComment={createPostComment}
-          getPostComments={getPostComments}
-        />
-      </>
-    );
-  }
+	state = {};
+	componentDidMount = () => {
+		this.props.getPosts();
+	};
+
+	render() {
+		let {
+			createPost,
+			createPostLoading,
+			createPostError,
+			posts,
+			postsLoading,
+			postsError,
+			createPostComment,
+			getPostComments,
+		} = this.props;
+		return (
+			<>
+				<WritePost
+					createPost={createPost}
+					createPostLoading={createPostLoading}
+					createPostError={createPostError}
+				/>
+				<Posts
+					posts={posts}
+					postsLoading={postsLoading}
+					postsError={postsError}
+					createPostComment={createPostComment}
+					getPostComments={getPostComments}
+				/>
+			</>
+		);
+	}
 }
 
 let mapStateToProps = (state) => {
-  let { createPostLoading, createPostError, posts, postsLoading, postsError } = state.newsfeedReducer;
-  return { createPostLoading, createPostError, posts, postsLoading, postsError };
+	let { createPostLoading, createPostError, posts, postsLoading, postsError } = state.newsfeedReducer;
+	return { createPostLoading, createPostError, posts, postsLoading, postsError };
 };
 
 let mapDispatchToProps = (dispatch) => {
-  return {
-    createPost: (post) => {
-      dispatch(createPost(post));
-    },
-    getPosts: () => {
-      dispatch(getPosts());
-    },
-    createPostComment: (postId, comment) => {
-      dispatch(createPostComment(postId, comment));
-    },
-    getPostComments: (postId) => {
-      dispatch(getPostComments(postId));
-    },
-  };
+	return {
+		createPost: (post) => {
+			dispatch(createPost(post));
+		},
+		getPosts: () => {
+			dispatch(getPosts());
+		},
+		createPostComment: (postId, comment) => {
+			dispatch(createPostComment(postId, comment));
+		},
+		getPostComments: (postId) => {
+			dispatch(getPostComments(postId));
+		},
+	};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewsFeedContainer);
