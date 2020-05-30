@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import { CommentBar } from './NewsFeed.style';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import moment from 'moment';
-import { Button, Col, Row } from 'react-bootstrap';
+import Button from '@material-ui/core/Button';
+import { Col, Row } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThumbsUp, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import store from '../../redux/store';
+import { like } from '../../redux/reducers/Comments/CommentsReducer';
 class Post extends Component {
 	state = {
 		showCommentInput: false,
@@ -18,7 +23,7 @@ class Post extends Component {
 		this.setState({ comment: e.target.value });
 	};
 	render() {
-		let { id, userName, date, text, createPostComment, comments } = this.props;
+		let { id, userName, date, text, createPostComment, comments, likes, liked } = this.props;
 		return (
 			<CommentBar>
 				<h6 className='title'>
@@ -27,26 +32,22 @@ class Post extends Component {
 				<div className='comment'>
 					<h3>{text}</h3>
 				</div>
-				{comments &&
-					comments.map((comment) => (
-						<div key={comment.id}>
-							<div>{comment.userName}</div>
-							<div className='row'>
-								<div className='col'>{comment.text}</div>
-								<div className='col'>{moment.unix(comment.postDate).startOf().fromNow()}</div>
-							</div>
-						</div>
-					))}
-
 				<ButtonGroup
 					className='mb-3 mt-3'
 					variant='text'
 					color='primary'
 					aria-label='text primary button group'>
-					<Button className='mr-2' variant='primary'>
+					<Button
+						className={liked ? 'action active' : 'action'}
+						onClick={(e) => {
+							console.log(id);
+							store.dispatch(like(id));
+						}}>
+						<p style={{ margin: 0 }}>{likes} liked</p>
+						<FontAwesomeIcon className='like' icon={faThumbsUp} />
 						Like
 					</Button>
-					<Button variant='info' onClick={this.toggleShowCommentInput}>
+					<Button className='action' onClick={this.toggleShowCommentInput}>
 						Comment
 					</Button>
 				</ButtonGroup>
@@ -68,6 +69,20 @@ class Post extends Component {
 								variant='success'>
 								Post
 							</Button>
+						</Col>
+						<Col xs={12}>
+							{comments &&
+								comments.map((comment) => (
+									<div key={comment.id} className='comm'>
+										<div className='flex'>
+											<h6>{comment.userName}</h6>
+											<p>{moment.unix(comment.postDate).startOf().fromNow()}</p>
+										</div>
+										<div className='row'>
+											<div className='col'>{comment.text}</div>
+										</div>
+									</div>
+								))}
 						</Col>
 					</Row>
 				)}

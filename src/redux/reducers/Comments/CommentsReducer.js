@@ -41,5 +41,6 @@ export const getComments = (tweetId) => (dispatch) => {
 export const like = (id) => (dispatch) => {
 	l(id).then((res) => {
 		store.dispatch(getUserTweets());
+		store.dispatch(getPosts());
 	});
 };
