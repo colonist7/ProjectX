@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Navbar } from './SideBar.style';
 import { Container, Row } from 'react-bootstrap';
+import Notification from '../Notification/Notification';
 
 class SideBar extends Component {
 	state = {};
@@ -29,6 +30,7 @@ class SideBar extends Component {
 									)
 							)}
 						</ul>
+						{isAuth && <Notification />}
 					</Row>
 				</Container>
 			</Navbar>
