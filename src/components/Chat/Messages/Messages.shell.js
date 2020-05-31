@@ -7,6 +7,7 @@ import { MessagesTop, MessagesBody, MessagesBottom, MessagesBase, Message, ChatP
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { chat } from '../../../redux/Socket';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 const initialState = { message: '' };
 class MessagesShell extends Component {
@@ -57,7 +58,7 @@ class MessagesShell extends Component {
 	};
 
 	keyPress = (e) => {
-		if (e.key == 'Enter') {
+		if (e.key === 'Enter') {
 			this.sendMessage(e, this.props.currentUser, this.props.userInfo.id);
 		}
 	};
@@ -119,10 +120,12 @@ class MessagesShell extends Component {
 						/>
 						<Button
 							type='submit'
+							color='primary'
+							variant='contained'
 							onClick={(e) => {
 								this.sendMessage(e, currentUser, userInfo.id);
 							}}>
-							Send
+							<FontAwesomeIcon icon={faPaperPlane} />
 						</Button>
 					</div>
 				</MessagesBottom>

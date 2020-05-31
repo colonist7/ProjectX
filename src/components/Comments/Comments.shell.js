@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import moment from 'moment';
+import { Comm } from './Comments.style';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 const InitialState = { userComment: '' };
 class CommentsShell extends Component {
@@ -31,15 +34,16 @@ class CommentsShell extends Component {
 						onChange={this.handleChange}
 					/>
 					<Button
+						color='primary'
 						onClick={(e) => {
 							sendComment(tweetId, this.state.userComment);
 							this.setState({ ...InitialState });
 						}}>
-						Send
+						<FontAwesomeIcon icon={faPaperPlane} />
 					</Button>
 				</div>
 				{commentVisible && (
-					<div className='comments' style={{ padding: '20px' }}>
+					<Comm className='comments' style={{ padding: '20px' }}>
 						{comments &&
 							comments[tweetId] &&
 							comments[tweetId].map((x, index) => {
@@ -57,7 +61,7 @@ class CommentsShell extends Component {
 									</div>
 								);
 							})}
-					</div>
+					</Comm>
 				)}
 			</div>
 		);

@@ -32,9 +32,6 @@ class NotificationShell extends Component {
 	};
 
 	render() {
-		const {} = this.state;
-		const {} = this.props;
-
 		return (
 			<NotificationBase
 				visible={this.state.visible}
@@ -44,7 +41,7 @@ class NotificationShell extends Component {
 				onMouseLeave={(e) => {
 					this.hideNotification();
 				}}>
-				<div>
+				<div title='Notifications'>
 					<FontAwesomeIcon icon={faBell} className={this.state.visible ? 'active' : ' '} />
 					<span className='counter'>{testNotifications.unread}</span>
 				</div>

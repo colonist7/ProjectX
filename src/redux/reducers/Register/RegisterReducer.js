@@ -1,82 +1,80 @@
-import { register as regApi } from "../../../api/auth.api";
+import { register as regApi } from '../../../api/auth.api';
 
-const REGISTER_USER = "REGISTER_USER";
-const REGISTER_USER_SUCCESS = "REGISTER_USER_SUCCESS";
-const REGISTER_USER_ERROR = "REGISTER_USER_ERROR";
-const REGISTER_SET_RESET_FALSE = "REGISTER_SET_RESET_FALSE";
+const REGISTER_USER = 'REGISTER_USER';
+const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS';
+const REGISTER_USER_ERROR = 'REGISTER_USER_ERROR';
+const REGISTER_SET_RESET_FALSE = 'REGISTER_SET_RESET_FALSE';
 
 const initialState = {
-  setRegisterError: false,
-  setRegisterLoading: false,
-  arePasswordsEqual: false,
-  resetForm: false,
+	setRegisterError: false,
+	setRegisterLoading: false,
+	arePasswordsEqual: false,
+	resetForm: false,
 };
 
 function validateEmail(email) {
-  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
+	var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	return re.test(String(email).toLowerCase());
 }
 
 function validation(state) {
-  let valid = true;
+	let valid = true;
 
-  if (state.userName.length === 0) {
-    valid = false;
-  }
+	if (state.userName.length === 0) {
+		valid = false;
+	}
 
-  if (!validateEmail(state.userMail)) {
-    valid = false;
-  }
+	if (!validateEmail(state.userMail)) {
+		valid = false;
+	}
 
-  if (!state.arePasswordsEqual) {
-    valid = false;
-  }
+	if (!state.arePasswordsEqual) {
+		valid = false;
+	}
 
-  return valid;
+	return valid;
 }
 
 export const registerReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case REGISTER_USER:
-      return { ...state, setRegisterError: false, setRegisterLoading: true };
-    case REGISTER_USER_ERROR:
-      return { ...state, setRegisterError: true, setRegisterLoading: false };
-    case REGISTER_USER_SUCCESS:
-      return { ...state, setRegisterError: false, setRegisterLoading: false, resetForm: true };
-    case REGISTER_SET_RESET_FALSE:
-      return { ...state, resetForm: false };
-    default:
-      return state;
-  }
+	switch (action.type) {
+		case REGISTER_USER:
+			return { ...state, setRegisterError: false, setRegisterLoading: true };
+		case REGISTER_USER_ERROR:
+			return { ...state, setRegisterError: true, setRegisterLoading: false };
+		case REGISTER_USER_SUCCESS:
+			return { ...state, setRegisterError: false, setRegisterLoading: false, resetForm: true };
+		case REGISTER_SET_RESET_FALSE:
+			return { ...state, resetForm: false };
+		default:
+			return state;
+	}
 };
 
 export const register = (userName, userMail, userPassword, confirmPassword) => (dispatch) => {
-  if (
-    validation({
-      userName: userName,
-      userMail: userMail,
-      arePasswordsEqual: userPassword === confirmPassword,
-    })
-  ) {
-    dispatch({ type: REGISTER_USER });
+	if (
+		validation({
+			userName: userName,
+			userMail: userMail,
+			arePasswordsEqual: userPassword === confirmPassword,
+		})
+	) {
+		dispatch({ type: REGISTER_USER });
 
-    regApi(userName, userMail, userPassword, confirmPassword).then(
-      (res) => {
-        if (res.data.success) {
-          dispatch({ type: REGISTER_USER_SUCCESS, payload: res });
-        } else {
-          dispatch({ type: REGISTER_USER_ERROR });
-        }
-      },
-      () => {
-        dispatch({ type: REGISTER_USER_ERROR });
-      }
-    );
-  } else {
-    alert("data isn;t valid");
-  }
+		regApi(userName, userMail, userPassword, confirmPassword).then(
+			(res) => {
+				if (res.data.success) {
+					dispatch({ type: REGISTER_USER_SUCCESS, payload: res });
+				} else {
+					dispatch({ type: REGISTER_USER_ERROR });
+				}
+			},
+			() => {
+				dispatch({ type: REGISTER_USER_ERROR });
+			}
+		);
+	}
 };
 
 export const RegisterSetResetFalse = () => (dispatch) => {
-  dispatch({ type: REGISTER_SET_RESET_FALSE });
+	dispatch({ type: REGISTER_SET_RESET_FALSE });
 };

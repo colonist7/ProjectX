@@ -1,96 +1,105 @@
-import React, { Component } from "react";
-import { Form, Button, Container, Row, FormLabel } from "react-bootstrap";
+import React, { Component } from 'react';
+import { Form, Container, Row } from 'react-bootstrap';
+import { RegisterBase } from './Register.style';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
-const InitialState = { userName: "", userPassword: "", confirmPassword: "", userMail: "", arePasswordsEqual: false };
+const InitialState = { userName: '', userPassword: '', confirmPassword: '', userMail: '', arePasswordsEqual: false };
 class RegisterShell extends Component {
-  state = { userName: "", userPassword: "", confirmPassword: "", userMail: "", arePasswordsEqual: false };
+	state = { userName: '', userPassword: '', confirmPassword: '', userMail: '', arePasswordsEqual: false };
 
-  checkPassword = (a, b) => {
-    this.setState({ arePasswordsEqual: a === b });
-  };
+	checkPassword = (a, b) => {
+		this.setState({ arePasswordsEqual: a === b });
+	};
 
-  reset = () => {
-    this.props.setResetFalse();
-    this.setState(InitialState);
-  };
+	reset = () => {
+		this.props.setResetFalse();
+		this.setState(InitialState);
+	};
 
-  handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-    if (e.target.name === "userPassword") {
-      this.checkPassword(e.target.value, this.state.confirmPassword);
-    } else if (e.target.name === "confirmPassword") {
-      this.checkPassword(this.state.userPassword, e.target.value);
-    }
-  };
+	handleChange = (e) => {
+		this.setState({ [e.target.name]: e.target.value });
+		if (e.target.name === 'userPassword') {
+			this.checkPassword(e.target.value, this.state.confirmPassword);
+		} else if (e.target.name === 'confirmPassword') {
+			this.checkPassword(this.state.userPassword, e.target.value);
+		}
+	};
 
-  render() {
-    const { userName, userMail, userPassword, confirmPassword, arePasswordsEqual } = this.state;
-    const { register, resetForm } = this.props;
+	render() {
+		const { userName, userMail, userPassword, confirmPassword, arePasswordsEqual } = this.state;
+		const { register, resetForm } = this.props;
 
-    if (resetForm === true) {
-      this.reset();
-    }
+		if (resetForm === true) {
+			this.reset();
+		}
 
-    return (
-      <Container>
-        <Row>
-          <h1>Registration</h1>
-        </Row>
-        <Row>
-          <Form lg={8}>
-            <FormLabel className="mt-3">E-Mail</FormLabel>
-            <Form.Control
-              name="userMail"
-              type="email"
-              value={userMail}
-              onChange={(e) => {
-                this.handleChange(e);
-              }}
-            />
+		return (
+			<RegisterBase>
+				<Container>
+					<Row>
+						<Form lg={8}>
+							<h3>Registration</h3>
+							<TextField
+								style={{ marginTop: '20px' }}
+								label='E-Mail'
+								name='userMail'
+								type='email'
+								value={userMail}
+								onChange={(e) => {
+									this.handleChange(e);
+								}}
+							/>
 
-            <FormLabel className="mt-3">Username</FormLabel>
-            <Form.Control
-              name="userName"
-              type="text"
-              value={userName}
-              onChange={(e) => {
-                this.handleChange(e);
-              }}
-            />
+							<TextField
+								style={{ marginTop: '20px' }}
+								label='Username'
+								name='userName'
+								type='text'
+								value={userName}
+								onChange={(e) => {
+									this.handleChange(e);
+								}}
+							/>
 
-            <FormLabel className="mt-3">Password</FormLabel>
-            <Form.Control
-              name="userPassword"
-              type="password"
-              value={userPassword}
-              onChange={(e) => {
-                this.handleChange(e);
-              }}
-            />
+							<TextField
+								style={{ marginTop: '20px' }}
+								label='Password'
+								name='userPassword'
+								type='password'
+								value={userPassword}
+								onChange={(e) => {
+									this.handleChange(e);
+								}}
+							/>
 
-            <FormLabel className="mt-3">Confirm Password</FormLabel>
-            <Form.Control
-              name="confirmPassword"
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => {
-                this.handleChange(e);
-              }}
-            />
-            {confirmPassword.length > 0 && <p>{arePasswordsEqual ? "" : "Passwords don't match"}</p>}
-            <Button
-              className="mt-3"
-              onClick={(e) => {
-                register(userName, userMail, userPassword, confirmPassword);
-              }}
-            >
-              Submit
-            </Button>
-          </Form>
-        </Row>
-      </Container>
-    );
-  }
+							<TextField
+								style={{ marginTop: '20px' }}
+								label='Confirm Password'
+								name='confirmPassword'
+								type='password'
+								value={confirmPassword}
+								onChange={(e) => {
+									this.handleChange(e);
+								}}
+							/>
+							{confirmPassword.length > 0 && <p>{arePasswordsEqual ? '' : "Passwords don't match"}</p>}
+
+							<Button
+								variant='contained'
+								color='primary'
+								className='mt-3'
+								onClick={(e) => {
+									register(userName, userMail, userPassword, confirmPassword);
+								}}>
+								Submit
+							</Button>
+						</Form>
+					</Row>
+				</Container>
+			</RegisterBase>
+		);
+	}
 }
 
 export default RegisterShell;

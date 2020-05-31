@@ -1,6 +1,4 @@
-import React, { Component } from 'react';
-import WritePost from './WritePost';
-import Posts from './Posts';
+import React from 'react';
 import { connect } from 'react-redux';
 import {
 	createPost,
@@ -8,62 +6,11 @@ import {
 	createPostComment,
 	getPostComments,
 } from '../../redux/reducers/NewsFeed/newsfeed.reducer';
-import { connection } from '../../redux/Socket';
+import { NewsFeedShell } from './Newsfeed.shell';
 
-// const connection = new signalR.HubConnectionBuilder()
-//   .withUrl("http://localhost:8080/tweetHub", { accessTokenFactory: () => sessionStorage.getItem("_token") })
-//   .configureLogging(signalR.LogLevel.Information)
-//   .build();
-
-// async function socketStart() {
-//   try {
-//     await connection.start();
-//     console.log("connected");
-//   } catch (err) {
-//     console.log(err);
-//     setTimeout(() => socketStart(), 5000);
-//   }
-// }
-
-// connection.on("newTweet", (data) => {
-//   getPosts();
-// });
-
-class NewsFeedContainer extends Component {
-	state = {};
-	componentDidMount = () => {
-		this.props.getPosts();
-	};
-
-	render() {
-		let {
-			createPost,
-			createPostLoading,
-			createPostError,
-			posts,
-			postsLoading,
-			postsError,
-			createPostComment,
-			getPostComments,
-		} = this.props;
-		return (
-			<>
-				<WritePost
-					createPost={createPost}
-					createPostLoading={createPostLoading}
-					createPostError={createPostError}
-				/>
-				<Posts
-					posts={posts}
-					postsLoading={postsLoading}
-					postsError={postsError}
-					createPostComment={createPostComment}
-					getPostComments={getPostComments}
-				/>
-			</>
-		);
-	}
-}
+const NewsFeedContainer = (props) => {
+	return <NewsFeedShell props={props} />;
+};
 
 let mapStateToProps = (state) => {
 	let { createPostLoading, createPostError, posts, postsLoading, postsError } = state.newsfeedReducer;

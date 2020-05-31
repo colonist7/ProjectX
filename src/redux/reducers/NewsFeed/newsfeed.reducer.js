@@ -24,6 +24,7 @@ let initialState = {
 	createCommentError: false,
 	getPostCommentsLoading: false,
 	getPostCommentsError: false,
+	firstTime: false,
 };
 
 export const newsfeedReducer = (state = initialState, action) => {
@@ -35,7 +36,11 @@ export const newsfeedReducer = (state = initialState, action) => {
 		case CREATE_POST_ERROR:
 			return { ...state, createPostError: true, createPostLoading: false };
 		case GET_POSTS:
-			return { ...state, postsLoading: true, postsError: false };
+			if (state.firstTime) {
+				return { ...state, postsLoading: true, postsError: false, firstTime: true };
+			} else {
+				return { ...state };
+			}
 		case GET_POSTS_SUCCESS: {
 			let posts = action.payload;
 			posts.sort((a, b) => b.postDate - a.postDate);

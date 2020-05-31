@@ -5,9 +5,10 @@ import moment from 'moment';
 import Button from '@material-ui/core/Button';
 import { Col, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import store from '../../redux/store';
 import { like } from '../../redux/reducers/Comments/CommentsReducer';
+import TextField from '@material-ui/core/TextField';
 class Post extends Component {
 	state = {
 		showCommentInput: false,
@@ -40,7 +41,6 @@ class Post extends Component {
 					<Button
 						className={liked ? 'action active' : 'action'}
 						onClick={(e) => {
-							console.log(id);
 							store.dispatch(like(id));
 						}}>
 						<p style={{ margin: 0 }}>{likes} liked</p>
@@ -52,21 +52,18 @@ class Post extends Component {
 					</Button>
 				</ButtonGroup>
 				{this.state.showCommentInput && (
-					<Row>
-						<Col>
-							<input
+					<Row className='comm'>
+						<Col md={12} className='flex'>
+							<TextField
+								label='Comment'
 								value={this.state.comment}
 								onChange={this.onCommentChange}
 								type='text'
 								className='form-control'
-								placeholder='Comment'
 							/>
-						</Col>
-						<Col>
 							<Button
 								disabled={!this.state.comment.length}
-								onClick={() => createPostComment(id, this.state.comment)}
-								variant='success'>
+								onClick={() => createPostComment(id, this.state.comment)}>
 								Post
 							</Button>
 						</Col>

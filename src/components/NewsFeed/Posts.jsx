@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { Container } from 'react-bootstrap';
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import { CommentBar } from './NewsFeed.style';
 import { Spinner, Alert } from 'react-bootstrap';
-import moment from 'moment';
 import Post from './Post';
 
 class Posts extends Component {

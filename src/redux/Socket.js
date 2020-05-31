@@ -18,9 +18,7 @@ export const chat = new signalR.HubConnectionBuilder()
 export async function chatStart() {
 	try {
 		await chat.start();
-		console.log('chat connected');
 	} catch (err) {
-		console.log(err);
 		setTimeout(() => chatStart(), 5000);
 	}
 }
@@ -28,9 +26,7 @@ export async function chatStart() {
 export async function socketStart() {
 	try {
 		await connection.start();
-		console.log('connected');
 	} catch (err) {
-		console.log(err);
 		setTimeout(() => socketStart(), 5000);
 	}
 }
@@ -41,7 +37,7 @@ connection.on('NewComment', (data) => {
 });
 
 connection.on('NewTweet', (data) => {
-	if (data.userId == sessionStorage.getItem('_id')) {
+	if (data.userId === sessionStorage.getItem('_id')) {
 		store.dispatch(getUserTweets());
 	} else {
 		store.dispatch(getPosts());

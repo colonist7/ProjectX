@@ -25,7 +25,7 @@ export const userReducer = (state = initialState, action) => {
 		case LOAD_USER_INFO:
 			return { ...state, userName: action.payload.data.userName, email: action.payload.data.email };
 		case GET_ALL_USERS:
-			let u = action.payload.data.users.filter((x) => x.id != sessionStorage.getItem('_id'));
+			let u = action.payload.data.users.filter((x) => x.id !== sessionStorage.getItem('_id'));
 			return { ...state, users: u };
 		case SET_USER_FOLLOWERS:
 			return { ...state, userFollowers: action.payload.data.followers };

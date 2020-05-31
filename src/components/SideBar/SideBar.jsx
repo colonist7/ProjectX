@@ -4,16 +4,26 @@ import { connect } from 'react-redux';
 import { Navbar } from './SideBar.style';
 import { Container, Row } from 'react-bootstrap';
 import Notification from '../Notification/Notification';
-
+import { clearUser } from '../../redux/reducers/User/UserReducer';
+import { logout } from '../../redux/reducers/Auth/AuthReducer';
+import store from '../../redux/store';
+import Button from '@material-ui/core/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faComments } from '@fortawesome/free-solid-svg-icons';
 class SideBar extends Component {
 	state = {};
+
+	logout = () => {
+		store.dispatch(logout());
+		store.dispatch(clearUser());
+	};
+
 	render() {
 		let { isAuth } = this.props;
 		let links = [
 			{ label: 'Home', path: '/', isVisible: true },
-			{ label: 'NewsFeed', path: '/newsfeed', isVisible: isAuth },
-			{ label: 'User', path: '/user', isVisible: isAuth },
-			{ label: 'Chat', path: '/chat', isVisible: isAuth },
+			{ label: 'News', path: '/newsfeed', isVisible: isAuth },
+			{ label: 'Profile', path: '/user', isVisible: isAuth },
 			{ label: 'Login', path: '/login', isVisible: !isAuth },
 		];
 		return (
@@ -30,7 +40,20 @@ class SideBar extends Component {
 									)
 							)}
 						</ul>
+						<Link className='chat' to='/chat' title='Chat'>
+							<FontAwesomeIcon icon={faComments} />
+						</Link>
 						{isAuth && <Notification />}
+						{isAuth && (
+							<Button
+								color='primary'
+								className='logout'
+								onClick={(e) => {
+									this.logout();
+								}}>
+								LOG OUT
+							</Button>
+						)}
 					</Row>
 				</Container>
 			</Navbar>

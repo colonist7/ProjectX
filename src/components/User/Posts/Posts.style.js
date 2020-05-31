@@ -1,6 +1,10 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import { fadeIn } from 'react-animations';
+
+const fadeInAnimation = keyframes`${fadeIn}`;
 
 export const CommentBar = styled.div`
+	animation: 1s ${fadeInAnimation};
 	border-bottom: 1px solid #efefef;
 	width: 100%;
 	padding: 20px;

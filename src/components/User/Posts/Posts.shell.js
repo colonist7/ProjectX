@@ -1,7 +1,6 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-// import { Image } from "react-bootstrap";
+import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { CommentBar } from './Posts.style';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';

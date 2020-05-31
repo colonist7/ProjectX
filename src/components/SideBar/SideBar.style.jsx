@@ -22,4 +22,17 @@ export const Navbar = styled.nav`
 			}
 		}
 	}
+
+	.chat {
+		padding: 7px;
+		color: #afafaf;
+		margin-left: auto;
+		font-size: 25px;
+
+		&:hover {
+			path {
+				fill: #4477ff;
+			}
+		}
+	}
 `;

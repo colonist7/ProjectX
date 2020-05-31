@@ -1,6 +1,29 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import { flipInX } from 'react-animations';
+
+const slideDown = keyframes`${flipInX}`;
 
 export const CommentBar = styled.div`
+	.comm {
+		animation: 1s ${slideDown};
+
+		.flex {
+			margin-bottom: 20px;
+			display: flex;
+			align-items: stretch;
+			position: relative;
+
+			button {
+				height: 100%;
+				margin-top: 6px;
+			}
+		}
+
+		h6 {
+			color: #4477ff;
+		}
+	}
+
 	border-bottom: 1px solid #efefef;
 	width: 100%;
 	padding: 20px;

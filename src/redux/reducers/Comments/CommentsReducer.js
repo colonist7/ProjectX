@@ -30,7 +30,6 @@ export const postComment = (id, text) => (dispatch) => {
 };
 
 export const getComments = (tweetId) => (dispatch) => {
-	console.log('I AM CALLED');
 	apiGetComments(tweetId).then((res) => {
 		if (res.data.success) {
 			dispatch({ type: GET_COMMENTS, payload: res.data, id: tweetId });

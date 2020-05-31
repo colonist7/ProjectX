@@ -1,9 +1,12 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import { fadeIn } from 'react-animations';
+
+const fadeInAnimation = keyframes`${fadeIn}`;
 
 export const NotificationBase = styled.div`
 	padding: 10px;
 	margin-top: 5px;
-	margin-left: auto;
+	margin-left: 10px;
 	position: relative;
 	margin-right: 60px;
 	cursor: pointer;
@@ -15,15 +18,22 @@ export const NotificationBase = styled.div`
 		path {
 			fill: #afafaf;
 		}
+
+		&:hover {
+			path {
+				fill: #4477ff;
+			}
+		}
 	}
 
 	.active {
 		path {
-			fill: #007bff;
+			fill: #4477ff;
 		}
 	}
 
 	.notifications {
+		animation: 1s ${fadeInAnimation};
 		display: ${(props) => (props.visible ? 'block' : 'none')};
 		position: absolute;
 		padding: 10px;
@@ -33,6 +43,10 @@ export const NotificationBase = styled.div`
 		top: 120%;
 		width: 200px;
 		background: #fff;
+
+		b {
+			color: #007bff;
+		}
 	}
 
 	.counter {
