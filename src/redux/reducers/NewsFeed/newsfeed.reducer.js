@@ -36,7 +36,7 @@ export const newsfeedReducer = (state = initialState, action) => {
 		case CREATE_POST_ERROR:
 			return { ...state, createPostError: true, createPostLoading: false };
 		case GET_POSTS:
-			if (state.firstTime) {
+			if (!state.firstTime) {
 				return { ...state, postsLoading: true, postsError: false, firstTime: true };
 			} else {
 				return { ...state };

@@ -11,5 +11,5 @@ export const getNotifications = () => {
 		},
 	};
 
-	return instance.get('api/getNotifications', options);
+	return instance.get('/api/Notifications/Get', options);
 };

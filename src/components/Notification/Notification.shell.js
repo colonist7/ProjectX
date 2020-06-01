@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { NotificationBase } from './Notification.style';
+import moment from 'moment';
 
 const testNotifications = {
 	unread: 3,
@@ -32,6 +33,7 @@ class NotificationShell extends Component {
 	};
 
 	render() {
+		const { notifications } = this.props;
 		return (
 			<NotificationBase
 				visible={this.state.visible}
@@ -43,30 +45,36 @@ class NotificationShell extends Component {
 				}}>
 				<div title='Notifications'>
 					<FontAwesomeIcon icon={faBell} className={this.state.visible ? 'active' : ' '} />
-					<span className='counter'>{testNotifications.unread}</span>
+					<span className='counter'>{notifications.length}</span>
 				</div>
 				<div
 					className='notifications'
 					onMouseEnter={(e) => {
 						this.showNotification();
 					}}>
-					{testNotifications &&
-						testNotifications.notifications.map((x, i) => {
-							return (
-								<div key={i}>
-									<p>
-										<b>{x.name}</b> has
-										{
-											{
-												['like']: <span> liked your post</span>,
-												['follow']: <span> followed you</span>,
-												['message']: <span> texted you</span>,
-											}[x.type]
-										}
-									</p>
-								</div>
-							);
-						})}
+					{notifications &&
+						notifications
+							.sort((a, b) => (a.sendDate > b.sendDate ? -1 : 1))
+							.map((x, i) => {
+								return (
+									x.fromUser.id !== sessionStorage.getItem('_id') && (
+										<div key={i}>
+											<p>
+												<b>{x.fromUser.userName}</b> has
+												{
+													{
+														['like']: <span> liked your post </span>,
+														['follower']: <span> followed you </span>,
+														['message']: <span> texted you </span>,
+														['comment']: <span> commented your post </span>,
+													}[x.notificationType.toLowerCase()]
+												}
+												{moment.unix(x.sendDate).startOf().fromNow()}
+											</p>
+										</div>
+									)
+								);
+							})}
 				</div>
 			</NotificationBase>
 		);

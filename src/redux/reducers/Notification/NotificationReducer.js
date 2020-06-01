@@ -3,11 +3,13 @@ import { getNotifications as gnotifications } from '../../../api/notifications.a
 const GET_NOTIFICATIONS = 'GET_NOTIFICATIONS';
 
 const initialState = {
-	notifications: {},
+	notifications: [],
 };
 
 export const notificationReducer = (state = initialState, action) => {
 	switch (action.type) {
+		case GET_NOTIFICATIONS:
+			return { ...state, notifications: [...action.payload] };
 		default:
 			return state;
 	}
@@ -16,7 +18,8 @@ export const notificationReducer = (state = initialState, action) => {
 export const getNotifications = () => (dispatch) => {
 	gnotifications().then((res) => {
 		if (res.data.success) {
-			dispatch({ type: GET_NOTIFICATIONS, payload: res.data.data });
+			console.log(res);
+			dispatch({ type: GET_NOTIFICATIONS, payload: res.data.data.notifications });
 		}
 	});
 };

@@ -5,6 +5,7 @@ import Posts from './Posts';
 export class NewsFeedShell extends Component {
 	componentDidMount = () => {
 		this.props.props.getPosts();
+		this.props.props.getPostComments();
 	};
 
 	render() {

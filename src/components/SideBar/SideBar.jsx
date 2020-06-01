@@ -40,9 +40,11 @@ class SideBar extends Component {
 									)
 							)}
 						</ul>
-						<Link className='chat' to='/chat' title='Chat'>
-							<FontAwesomeIcon icon={faComments} />
-						</Link>
+						{isAuth && (
+							<Link className='chat' to='/chat' title='Chat'>
+								<FontAwesomeIcon icon={faComments} />
+							</Link>
+						)}
 						{isAuth && <Notification />}
 						{isAuth && (
 							<Button

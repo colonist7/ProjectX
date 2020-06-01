@@ -34,14 +34,17 @@ export const NotificationBase = styled.div`
 
 	.notifications {
 		animation: 1s ${fadeInAnimation};
-		display: ${(props) => (props.visible ? 'block' : 'none')};
+		display: ${(props) => (props.visible ? 'block	' : 'none')};
+		max-height: 400px;
+		overflow: auto;
+		text-align: center;
 		position: absolute;
 		padding: 10px;
 		box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 		left: 50%;
 		transform: translateX(-50%);
 		top: 120%;
-		width: 200px;
+		width: 300px;
 		background: #fff;
 
 		b {
