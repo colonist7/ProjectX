@@ -57,7 +57,8 @@ class NotificationShell extends Component {
 							.sort((a, b) => (a.sendDate > b.sendDate ? -1 : 1))
 							.map((x, i) => {
 								return (
-									x.fromUser.id !== sessionStorage.getItem('_id') && (
+									x.fromUser.id !== sessionStorage.getItem('_id') &&
+									x.notificationType !== 'Message' && (
 										<div key={i}>
 											<p>
 												<b>{x.fromUser.userName}</b> has
@@ -65,7 +66,6 @@ class NotificationShell extends Component {
 													{
 														['like']: <span> liked your post </span>,
 														['follower']: <span> followed you </span>,
-														['message']: <span> texted you </span>,
 														['comment']: <span> commented your post </span>,
 													}[x.notificationType.toLowerCase()]
 												}
