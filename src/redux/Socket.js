@@ -2,7 +2,7 @@ import * as signalR from '@microsoft/signalr';
 import store from './store';
 import { getComments } from './reducers/Comments/CommentsReducer';
 import { getUserTweets } from './reducers/User/UserReducer';
-import { getMessages } from './reducers/Chat/chat.reducer';
+import { getMessages, unseens } from './reducers/Chat/chat.reducer';
 import { getPosts, getPostComments } from './reducers/NewsFeed/newsfeed.reducer';
 import { getNotifications } from './reducers/Notification/NotificationReducer';
 import not from '../assets/Sounds/done-for-you.mp3';
@@ -71,6 +71,7 @@ notifications.on('ReceiveNotification', (data) => {
 chat.on('ReceiveMessage', (data) => {
 	let from = sessionStorage.getItem('_id');
 	let to = store.getState().chatReducer.userInfo.id;
+	store.dispatch(unseens());
 	store.dispatch(getMessages(from, to));
 	var audio = new Audio(mes);
 	audio.play();

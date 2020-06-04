@@ -8,6 +8,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { chat } from '../../../redux/Socket';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { unseens } from '../../../redux/reducers/Chat/chat.reducer';
+import store from '../../../redux/store';
 
 const initialState = { message: '' };
 class MessagesShell extends Component {
@@ -46,6 +48,10 @@ class MessagesShell extends Component {
 					this.resetMessage();
 				})
 				.catch((err) => console.error(err));
+
+			chat.invoke('ReadMessages').then(() => {
+				store.dispatch(unseens());
+			});
 		}
 	};
 

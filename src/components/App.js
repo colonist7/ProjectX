@@ -12,11 +12,15 @@ import ProtectedRoute from '../utils/ProtectedRoute';
 import PublicRoute from '../utils/PublicRoute';
 import SideBar from './SideBar/SideBar';
 import { socketStart, chatStart, notify } from '../redux/Socket';
+import store from '../redux/store';
+import { unseens } from '../redux/reducers/Chat/chat.reducer';
 
 class App extends Component {
 	componentDidMount() {
 		socketStart();
-		chatStart();
+		chatStart().then(() => {
+			store.dispatch(unseens());
+		});
 		notify();
 	}
 

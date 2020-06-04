@@ -1,15 +1,17 @@
-import { getMessages as messages } from '../../../api/chat.api';
+import { getMessages as messages, getUnseens } from '../../../api/chat.api';
 
 const CHAT_IS_LOADING = 'CHAT_IS_LOADING';
 const CHAT_LOAD_ERROR = 'CHAT_LOAD_ERROR';
 const CHAT_LOAD_SUCCESS = 'CHAT_LOAD_SUCCESS';
 const SET_USER_INFO = 'SET_USER_INFO';
+const SET_UNSEEN_MESSAGES = 'SET_UNSEEN_MESSAGES';
 
 export const initialState = {
 	messages: [],
 	userInfo: {},
 	setChatError: false,
 	setChatLoading: false,
+	unseen: 0,
 };
 
 export const chatReducer = (state = initialState, action) => {
@@ -22,6 +24,8 @@ export const chatReducer = (state = initialState, action) => {
 			return { ...state, setChatError: false, setChatLoading: false, messages: action.payload };
 		case SET_USER_INFO:
 			return { ...state, userInfo: action.payload };
+		case SET_UNSEEN_MESSAGES:
+			return { ...state, unseen: action.payload };
 		default:
 			return state;
 	}
@@ -45,4 +49,10 @@ export const getMessages = (fromUser, toUser) => (dispatch) => {
 
 export const setUserInfo = (info) => (dispatch) => {
 	dispatch({ type: SET_USER_INFO, payload: info });
+};
+
+export const unseens = () => (dispatch) => {
+	getUnseens().then((res) => {
+		dispatch({ type: SET_UNSEEN_MESSAGES, payload: res.data.data });
+	});
 };

@@ -3,15 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { NotificationBase } from './Notification.style';
 import moment from 'moment';
+import { notifications } from '../../redux/Socket';
 
-const testNotifications = {
-	unread: 3,
-	notifications: [
-		{ type: 'message', name: 'manu', postDate: '19/07/03' },
-		{ type: 'like', name: 'temo', postDate: '20/08/21' },
-		{ type: 'follow', name: 'nino', postDate: '30/12/21' },
-	],
-};
 class NotificationShell extends Component {
 	state = { visible: false, stillVisible: false };
 
@@ -21,6 +14,16 @@ class NotificationShell extends Component {
 
 	showNotification = () => {
 		this.setState({ visible: true, stillVisible: true });
+
+		notifications
+			.invoke('ReadNotifications')
+			.then((res) => {
+				console.log(res);
+				this.props.getNotifications();
+			})
+			.catch((e) => {
+				console.log(e);
+			});
 	};
 
 	hideNotification = () => {
@@ -45,7 +48,7 @@ class NotificationShell extends Component {
 				}}>
 				<div title='Notifications'>
 					<FontAwesomeIcon icon={faBell} className={this.state.visible ? 'active' : ' '} />
-					<span className='counter'>{notifications.length}</span>
+					<span className='counter'>{notifications.filter((x) => !x.isSeen).length}</span>
 				</div>
 				<div
 					className='notifications'

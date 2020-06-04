@@ -6,6 +6,8 @@ import ChatList from '../ChatList/ChatList';
 class ChatShell extends Component {
 	state = {};
 
+	componentDidMount() {}
+
 	render() {
 		return (
 			<Row style={{ margin: '-25px 0 0' }}>

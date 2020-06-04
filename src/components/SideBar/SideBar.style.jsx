@@ -23,10 +23,29 @@ export const Navbar = styled.nav`
 		}
 	}
 
+	.amount {
+		width: 10px;
+		height: 10px;
+		color: #fff;
+		background: red;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: absolute;
+		width: 12px;
+		height: 13px;
+		top: 25.5px;
+		pointer-events: none;
+		right: 5px;
+		font-size: 10px;
+		border-radius: 50%;
+	}
+
 	.chat {
 		padding: 7px;
 		color: #afafaf;
 		margin-left: auto;
+		position: relative;
 		font-size: 25px;
 
 		&:hover {
