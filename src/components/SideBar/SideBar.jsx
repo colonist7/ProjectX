@@ -10,10 +10,53 @@ import store from '../../redux/store';
 import Button from '@material-ui/core/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComments } from '@fortawesome/free-solid-svg-icons';
-import { chat } from '../../redux/Socket';
 import { unseens } from '../../redux/reducers/Chat/chat.reducer';
+import { socketStart, chatStart, notify, notifications, chat, connection } from '../../redux/Socket';
 class SideBar extends Component {
 	state = {};
+	componentDidMount() {
+		if (this.props.isAuth) {
+			//SOCKETS
+			socketStart();
+			chatStart().then(() => {
+				store.dispatch(unseens());
+			});
+			notify();
+
+			//BROWSER NOTIFICATIONS
+			if (!window.Notification) {
+				console.log('change browser');
+			} else {
+				if (Notification.permission === 'granted') {
+					console.log('granted');
+				} else {
+					window.Notification.requestPermission();
+				}
+			}
+		}
+	}
+
+	componentDidUpdate(prevProps) {
+		if (this.props.isAuth && this.props.isAuth != prevProps.isAuth) {
+			//SOCKETS
+			socketStart();
+			chatStart().then(() => {
+				store.dispatch(unseens());
+			});
+			notify();
+
+			//BROWSER NOTIFICATIONS
+			if (!window.notifications) {
+				console.log('change browser');
+			} else {
+				console.log('hou');
+			}
+		} else if (!this.props.isAuth && this.props.isAuth != prevProps.isAuth) {
+			notifications.stop();
+			chat.stop();
+			connection.stop();
+		}
+	}
 
 	sendUnseens = () => {
 		chat.invoke('ReadMessages').then(() => {

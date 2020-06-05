@@ -41,6 +41,7 @@ export async function notify() {
 
 export async function socketStart() {
 	try {
+		console.log('started');
 		await connection.start();
 	} catch (err) {
 		setTimeout(() => socketStart(), 5000);
@@ -61,6 +62,11 @@ connection.on('NewTweet', (data) => {
 });
 
 notifications.on('ReceiveNotification', (data) => {
+	if (window.Notification.permission === 'granted') {
+		if (sessionStorage.getItem('focused') == 'true') {
+			browserNotification(data.userName, data.notification);
+		}
+	}
 	if (data.notification !== 'Message') {
 		store.dispatch(getNotifications());
 		var audio = new Audio(not);
@@ -76,3 +82,34 @@ chat.on('ReceiveMessage', (data) => {
 	var audio = new Audio(mes);
 	audio.play();
 });
+
+const browserNotification = (title, info) => {
+	let str = '';
+	switch (info) {
+		case 'Comment':
+			str = ' has commented on your post';
+			break;
+		case 'Follow':
+			str = ' has followed you';
+			break;
+		case 'Like':
+			str = ' has liked your post';
+			break;
+		default:
+			str = info;
+			break;
+	}
+
+	let notify = new Notification('ProjectX', {
+		body: title + str,
+	});
+	console.log('nope');
+};
+
+window.onblur = function () {
+	sessionStorage.setItem('focused', false);
+};
+
+window.onclick = function () {
+	sessionStorage.setItem('focused', true);
+};
