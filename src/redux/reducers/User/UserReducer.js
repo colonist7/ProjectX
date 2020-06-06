@@ -1,4 +1,4 @@
-import { getUser, getAllUsers } from '../../../api/user.api';
+import { getUser, getAllUsers, imageSave } from '../../../api/user.api';
 import { follow, getFollowing, getFollowers } from '../../../api/follow.api';
 import { tweet, getTweets } from '../../../api/tweets.api';
 
@@ -8,6 +8,7 @@ const SET_USER_FOLLOWERS = 'USER_FOLLOWERS';
 const SET_USER_FOLLOWING = 'USER_FOLLOWING';
 const CLEAR_USER = 'CLEAR_USER';
 const GET_TWEET = 'GET_TWEET';
+const SAVE_IMAGE = 'SAVE_IMAGE';
 
 const initialState = {
 	token: '',
@@ -18,6 +19,7 @@ const initialState = {
 	userFollowing: [],
 	users: [],
 	tweets: [],
+	profileImage: '',
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -34,14 +36,10 @@ export const userReducer = (state = initialState, action) => {
 		case CLEAR_USER:
 			return { ...initialState };
 		case GET_TWEET:
-			// let tweets = [...state.tweets];
-			// for (let tweet of action.payload.tweets) {
-			// 	if (tweets.filter((x) => x.id === tweet.id).length === 0) {
-			// 		tweets.push(tweet);
-			// 	}
-			// }
 			action.payload.tweets.sort((a, b) => (a.postDate < b.postDate ? 1 : -1));
 			return { ...state, tweets: action.payload.tweets };
+		case SAVE_IMAGE:
+			return { ...state, profileImage: action.payload };
 		default:
 			return state;
 	}
@@ -107,6 +105,15 @@ export const getUserTweets = () => (dispatch) => {
 	getTweets().then((res) => {
 		if (res.data.success) {
 			dispatch({ type: GET_TWEET, payload: res.data.data });
+		}
+	});
+};
+
+export const saveImage = (file) => (dispatch) => {
+	imageSave(file).then((res) => {
+		console.log(file);
+		if (res.data.success) {
+			dispatch({ type: SAVE_IMAGE, payload: res.data.data.url });
 		}
 	});
 };

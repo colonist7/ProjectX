@@ -103,7 +103,6 @@ const browserNotification = (title, info) => {
 	let notify = new Notification('ProjectX', {
 		body: title + str,
 	});
-	console.log('nope');
 };
 
 window.onblur = function () {

@@ -18,7 +18,6 @@ export const notificationReducer = (state = initialState, action) => {
 export const getNotifications = () => (dispatch) => {
 	gnotifications().then((res) => {
 		if (res.data.success) {
-			console.log(res);
 			dispatch({ type: GET_NOTIFICATIONS, payload: res.data.data.notifications });
 		}
 	});

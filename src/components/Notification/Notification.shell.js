@@ -18,7 +18,6 @@ class NotificationShell extends Component {
 		notifications
 			.invoke('ReadNotifications')
 			.then((res) => {
-				console.log(res);
 				this.props.getNotifications();
 			})
 			.catch((e) => {

@@ -25,10 +25,8 @@ class SideBar extends Component {
 
 			//BROWSER NOTIFICATIONS
 			if (!window.Notification) {
-				console.log('change browser');
 			} else {
 				if (Notification.permission === 'granted') {
-					console.log('granted');
 				} else {
 					window.Notification.requestPermission();
 				}
@@ -49,7 +47,10 @@ class SideBar extends Component {
 			if (!window.notifications) {
 				console.log('change browser');
 			} else {
-				console.log('hou');
+				if (Notification.permission === 'granted' || Notification.permission === 'denied') {
+				} else {
+					window.Notification.requestPermission();
+				}
 			}
 		} else if (!this.props.isAuth && this.props.isAuth != prevProps.isAuth) {
 			notifications.stop();
