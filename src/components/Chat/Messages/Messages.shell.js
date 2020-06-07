@@ -10,6 +10,7 @@ import { chat } from '../../../redux/Socket';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { unseens } from '../../../redux/reducers/Chat/chat.reducer';
 import store from '../../../redux/store';
+import moment from 'moment';
 
 const initialState = { message: '' };
 class MessagesShell extends Component {
@@ -95,7 +96,7 @@ class MessagesShell extends Component {
 									<Message
 										currentUser={mes.fromUser.id === currentUser}
 										key={index}
-										title={mes.sendDate}>
+										title={moment.unix(mes.sendDate).startOf().fromNow()}>
 										{mes.text}
 									</Message>
 								)

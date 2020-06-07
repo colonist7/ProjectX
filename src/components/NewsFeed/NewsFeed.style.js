@@ -1,7 +1,7 @@
 import styled, { keyframes } from 'styled-components';
-import { flipInX } from 'react-animations';
+import { fadeIn } from 'react-animations';
 
-const slideDown = keyframes`${flipInX}`;
+const slideDown = keyframes`${fadeIn}`;
 
 export const CommentBar = styled.div`
 	.comm {

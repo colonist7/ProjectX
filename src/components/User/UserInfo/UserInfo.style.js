@@ -6,11 +6,12 @@ export const UserInfoBlock = styled.div`
 	position: relative;
 
 	.image-block {
-		width: 100%;
-		margin: 0 0 10px 0;
-		height: 300px;
+		width: 230px;
+		display: block;
+		margin: 0 auto 10px;
+		height: 230px;
 		border: 2px solid #3355ff;
-		border-radius: 30px;
+		border-radius: 50%;
 		overflow: hidden;
 		position: relative;
 
@@ -27,7 +28,7 @@ export const UserInfoBlock = styled.div`
 			justify-content: center;
 			align-items: center;
 			text-align: center;
-			font-size: 40px;
+			font-size: 30px;
 			opacity: 0;
 			transition: all 0.2s ease-in-out;
 			font-weight: bold;

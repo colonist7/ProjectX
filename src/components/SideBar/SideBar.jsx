@@ -35,7 +35,7 @@ class SideBar extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		if (this.props.isAuth && this.props.isAuth != prevProps.isAuth) {
+		if (this.props.isAuth && this.props.isAuth !== prevProps.isAuth) {
 			//SOCKETS
 			socketStart();
 			chatStart().then(() => {
@@ -47,12 +47,11 @@ class SideBar extends Component {
 			if (!window.notifications) {
 				console.log('change browser');
 			} else {
-				if (Notification.permission === 'granted' || Notification.permission === 'denied') {
-				} else {
+				if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
 					window.Notification.requestPermission();
 				}
 			}
-		} else if (!this.props.isAuth && this.props.isAuth != prevProps.isAuth) {
+		} else if (!this.props.isAuth && this.props.isAuth !== prevProps.isAuth) {
 			notifications.stop();
 			chat.stop();
 			connection.stop();

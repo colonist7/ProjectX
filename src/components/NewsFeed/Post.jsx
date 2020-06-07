@@ -17,6 +17,12 @@ class Post extends Component {
 	componentDidMount = () => {
 		this.props.getPostComments(this.props.id);
 	};
+
+	sendComment = (id, com) => {
+		this.props.createPostComment(id, com);
+		this.setState({ comment: '' });
+	};
+
 	toggleShowCommentInput = () => {
 		this.setState({ showCommentInput: !this.state.showCommentInput });
 	};
@@ -24,7 +30,7 @@ class Post extends Component {
 		this.setState({ comment: e.target.value });
 	};
 	render() {
-		let { id, userName, date, text, createPostComment, comments, likes, liked } = this.props;
+		let { id, userName, date, text, comments, likes, liked } = this.props;
 		return (
 			<CommentBar>
 				<h6 className='title'>
@@ -63,7 +69,9 @@ class Post extends Component {
 							/>
 							<Button
 								disabled={!this.state.comment.length}
-								onClick={() => createPostComment(id, this.state.comment)}>
+								onClick={() => {
+									this.sendComment(id, this.state.comment);
+								}}>
 								Post
 							</Button>
 						</Col>

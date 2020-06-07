@@ -62,15 +62,17 @@ connection.on('NewTweet', (data) => {
 });
 
 notifications.on('ReceiveNotification', (data) => {
-	if (window.Notification.permission === 'granted') {
-		if (sessionStorage.getItem('focused') == 'true') {
-			browserNotification(data.userName, data.notification);
+	if (data.userId !== sessionStorage.getItem('_id')) {
+		if (window.Notification.permission === 'granted') {
+			if (sessionStorage.getItem('focused') === 'true') {
+				browserNotification(data.userName, data.notification);
+			}
 		}
-	}
-	if (data.notification !== 'Message') {
-		store.dispatch(getNotifications());
-		var audio = new Audio(not);
-		audio.play();
+		if (data.notification !== 'Message') {
+			store.dispatch(getNotifications());
+			var audio = new Audio(not);
+			audio.play();
+		}
 	}
 });
 
@@ -100,7 +102,7 @@ const browserNotification = (title, info) => {
 			break;
 	}
 
-	let notify = new Notification('ProjectX', {
+	let not = new Notification('ProjectX', {
 		body: title + str,
 	});
 };
